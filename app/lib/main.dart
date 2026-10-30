@@ -44,7 +44,9 @@ class _SmsAlertAppState extends State<SmsAlertApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) unawaited(controller.refresh());
+    if (state == AppLifecycleState.resumed) {
+      unawaited(controller.refresh(clearError: false));
+    }
   }
 
   @override

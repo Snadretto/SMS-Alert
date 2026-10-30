@@ -87,7 +87,7 @@ Das Programm nutzt Umgebungsvariablen oder die vorbereiteten `.tools/`-Pfade.
 `FLUTTER_BIN` kann eine andere lokale Flutter-Installation auswählen.
 Es erstellt einmalig einen lokalen **Testschlüssel** und geschützte
 `signing.properties` unter `.tools/signing/`; weitere Builds benutzen denselben
-Schlüssel. Ergebnis: `dist/sms-alert-0.1.0-test.apk` und `dist/SHA256SUMS`.
+Schlüssel. Ergebnis: `dist/sms-alert-0.1.1-test.apk` und `dist/SHA256SUMS`.
 Der Build ist reproduzierbar ausführbar; binär identische APKs über verschiedene
 Hosts/Zeitpunkte werden nicht zugesichert. Ohne explizite Signaturkonfiguration
 wird nicht still ein Debug-Schlüssel für einen Release gewählt.
@@ -114,7 +114,7 @@ entstehen über die Oberfläche, SMS über die Emulator-Konsole.
 ```bash
 python3 tools/emulator_smoke.py \
   --adb .tools/android-sdk/platform-tools/adb --serial emulator-5556 \
-  --apk dist/sms-alert-0.1.0-test.apk --reset --soak-seconds 1800
+  --apk dist/sms-alert-0.1.1-test.apk --reset --soak-seconds 1800
 ```
 
 Das Testgerät bleibt ohne Host-Audio. Physische Vibration, Hörbarkeit, echte

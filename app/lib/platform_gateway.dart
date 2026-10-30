@@ -100,12 +100,12 @@ class AppController extends ChangeNotifier {
     await refresh();
   }
 
-  Future<void> refresh() async {
+  Future<void> refresh({bool clearError = true}) async {
     try {
       final value = await gateway.snapshot();
       if (!_disposed) {
         data = value;
-        error = null;
+        if (clearError) error = null;
         notifyListeners();
       }
     } catch (failure) {

@@ -97,6 +97,9 @@ void main() {
       expect(await controller.run('requestCorePermissions'), isFalse);
       expect(controller.error, 'Zugriff verweigert');
       expect(controller.busy, isFalse);
+      // Returning from Android's permission dialog must not erase its denial message.
+      await controller.refresh(clearError: false);
+      expect(controller.error, 'Zugriff verweigert');
       gateway.failure = null;
       gateway.value = state(enabled: true);
       expect(await controller.run('setEnabled', {'enabled': true}), isTrue);
@@ -143,6 +146,64 @@ void main() {
     await tester.pumpAndSettle();
     expect(gateway.calls.single.$1, 'acknowledge');
     expect(gateway.calls.single.$2, {'id': 'event-1'});
+  });
+  testWidgets(
+    'missing SMS permission offers a dedicated request and app settings',
+    (tester) async {
+      final base = state();
+      final gateway = FakeGateway(
+        AppSnapshot(
+          supported: true,
+          rules: base.rules,
+          diagnostics: {...base.diagnostics, 'smsPermission': false},
+        ),
+      );
+      await tester.pumpWidget(SmsAlertApp(gateway: gateway));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Einrichtung'));
+      await tester.pumpAndSettle();
+      final request = find.text('SMS-Zugriff anfragen');
+      await tester.ensureVisible(request);
+      await tester.tap(request);
+      await tester.pumpAndSettle();
+      expect(gateway.calls.single.$1, 'requestSmsPermission');
+      // Completing a request does not turn missing permission into a granted check.
+      expect(find.text('SMS-Zugriff anfragen'), findsOneWidget);
+      final settings = find.text('App-Berechtigungen öffnen');
+      await tester.ensureVisible(settings);
+      await tester.tap(settings);
+      await tester.pumpAndSettle();
+      expect(gateway.calls.last.$1, 'openSettings');
+      expect(gateway.calls.last.$2, {'kind': 'app'});
+    },
+  );
+  testWidgets('denied SMS request shows its explanation and retains recovery', (
+    tester,
+  ) async {
+    final base = state();
+    final gateway =
+        FakeGateway(
+            AppSnapshot(
+              supported: true,
+              rules: base.rules,
+              diagnostics: {...base.diagnostics, 'smsPermission': false},
+            ),
+          )
+          ..failure = PlatformException(
+            code: 'sms_permission_denied',
+            message: 'SMS-Zugriff wurde nicht freigegeben.',
+          );
+    await tester.pumpWidget(SmsAlertApp(gateway: gateway));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Einrichtung'));
+    await tester.pumpAndSettle();
+    final request = find.text('SMS-Zugriff anfragen');
+    await tester.ensureVisible(request);
+    await tester.tap(request);
+    await tester.pumpAndSettle();
+    expect(find.text('SMS-Zugriff wurde nicht freigegeben.'), findsOneWidget);
+    expect(find.text('App-Berechtigungen öffnen'), findsOneWidget);
+    expect(gateway.value.flag('smsPermission'), isFalse);
   });
   testWidgets('rule editor validates criteria before native save', (
     tester,

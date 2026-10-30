@@ -196,14 +196,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const SizedBox(height: 12),
             const Text(
-              'Version 0.1.0 · Android-Testversion\n\nIdee, Konzeption und Design: Snadretto.\nProgrammcode mit GPT-6.1 Sol generiert.\n\nKeine eigenen Netzwerkverbindungen, kein Konto, kein Backend, keine Telemetrie. Die SMS-Zustellung erfolgt durch Android und das Mobilfunknetz.\n\nEine Quittierung wird nicht an einen Arbeitgeber oder eine Leitstelle gesendet. Nach Neustart zuerst entsperren; nach manuellem App-Stopp einmal öffnen.',
+              'Version 0.1.1 · Android-Testversion\n\nIdee, Konzeption und Design: Snadretto.\nProgrammcode mit GPT-6.1 Sol generiert.\n\nKeine eigenen Netzwerkverbindungen, kein Konto, kein Backend, keine Telemetrie. Die SMS-Zustellung erfolgt durch Android und das Mobilfunknetz.\n\nEine Quittierung wird nicht an einen Arbeitgeber oder eine Leitstelle gesendet. Nach Neustart zuerst entsperren; nach manuellem App-Stopp einmal öffnen.',
             ),
             const SizedBox(height: 12),
             TextButton.icon(
               onPressed: () => showLicensePage(
                 context: context,
                 applicationName: 'SMS-Alert',
-                applicationVersion: '0.1.0',
+                applicationVersion: '0.1.1',
                 applicationLegalese: 'Copyright 2026 Snadretto',
               ),
               icon: const Icon(Icons.description_outlined),

@@ -655,15 +655,33 @@ class _AppShellState extends State<AppShell> {
                 onPressed: controller.busy
                     ? null
                     : () => controller.run(
-                        check.action == 'permissions'
-                            ? 'requestCorePermissions'
+                        check.action == 'smsPermission' && !check.ok
+                            ? 'requestSmsPermission'
                             : 'openSettings',
-                        check.action == 'permissions'
+                        check.action == 'smsPermission' && !check.ok
                             ? null
-                            : {'kind': check.action},
+                            : {
+                                'kind': check.action == 'smsPermission'
+                                    ? 'app'
+                                    : check.action,
+                              },
                       ),
-                child: Text(check.ok ? 'Einstellung prüfen' : 'Einrichten'),
+                child: Text(
+                  check.action == 'smsPermission' && !check.ok
+                      ? 'SMS-Zugriff anfragen'
+                      : check.ok
+                      ? 'Einstellung prüfen'
+                      : 'Einrichten',
+                ),
               ),
+              if (check.action == 'smsPermission' && !check.ok)
+                TextButton.icon(
+                  onPressed: controller.busy
+                      ? null
+                      : () => controller.run('openSettings', {'kind': 'app'}),
+                  icon: const Icon(Icons.settings_outlined),
+                  label: const Text('App-Berechtigungen öffnen'),
+                ),
             ],
           ),
         ),

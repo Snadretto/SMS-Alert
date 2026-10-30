@@ -26,7 +26,8 @@ oder Ereignisspeicher. Der SMS-/Alarmpfad startet keinen Flutter-Engine-Prozess.
 | `acknowledgeAll` | Bewusste gesonderte Aktion für alle offenen Ereignisse |
 | `resumeAlarm` | Versucht offene Alarme im zulässigen Vordergrundzustand fortzusetzen; erfindet kein Ereignis |
 | `clearHistory` | Löscht nur abgeschlossene Ereignisse |
-| `requestCorePermissions` | Android-SMS-/Benachrichtigungsdialog, anschließend Snapshot neu lesen |
+| `requestCorePermissions` | Nur fehlende SMS-/Benachrichtigungsrechte anfragen; tatsächliche Freigaben prüfen und Ablehnung als verständlichen Fehler zurückgeben |
+| `requestSmsPermission` | Nur fehlenden SMS-Zugriff anfragen; keine gekoppelte Benachrichtigungsanfrage |
 | `openSettings` | Nur definierte `kind`-Werte; keine frei übergebbaren URLs oder Intents |
 
 Eine Regel hat `id`, `name`, `sender`, `text`, `logic` (AND/OR), `enabled`,

@@ -227,9 +227,11 @@ class AppSnapshot {
   List<SetupCheck> get checks => [
     SetupCheck(
       'SMS empfangen',
-      'Nur neue SMS lesen; kein Zugriff auf das Postfach oder Kontakte.',
+      flag('smsPermission')
+          ? 'SMS-Empfang ist freigegeben. Kein Zugriff auf das Postfach oder Kontakte.'
+          : 'SMS-Empfang ist noch nicht freigegeben. Falls kein Dialog erscheint: App-Berechtigungen öffnen und „Berechtigungen → SMS“ prüfen. Ist die Auswahl gesperrt, kann Android den Installationsweg oder eine Geräterichtlinie einschränken.',
       flag('smsPermission'),
-      'permissions',
+      'smsPermission',
     ),
     SetupCheck(
       'Alarmbenachrichtigungen',

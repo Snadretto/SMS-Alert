@@ -4,6 +4,7 @@ package ch.snadretto.smsalert
 import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.SystemClock
@@ -16,6 +17,7 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     private var permissionResult: MethodChannel.Result? = null
+    private var requestedPermissions = emptyList<String>()
     private var streamListener: (() -> Unit)? = null
     private var methods: MethodChannel? = null
     private var events: EventChannel? = null
@@ -49,12 +51,8 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun handleMethod(call: MethodCall, result: MethodChannel.Result) {
-        if (call.method == "requestCorePermissions") {
-            if (permissionResult != null) { result.error("busy", "Eine Berechtigungsanfrage ist bereits offen.", null); return }
-            permissionResult = result
-            val permissions = mutableListOf(Manifest.permission.RECEIVE_SMS)
-            if (Build.VERSION.SDK_INT >= 33) permissions += Manifest.permission.POST_NOTIFICATIONS
-            requestPermissions(permissions.toTypedArray(), 71)
+        if (call.method in setOf("requestCorePermissions", "requestSmsPermission")) {
+            requestRuntimePermissions(call.method, result)
             return
         }
         if (call.method == "openSettings") {
@@ -101,6 +99,22 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+    private fun requestRuntimePermissions(method: String, result: MethodChannel.Result) {
+        if (permissionResult != null) { result.error("busy", "Eine Berechtigungsanfrage ist bereits offen.", null); return }
+        val permissions = mutableListOf(Manifest.permission.RECEIVE_SMS)
+        if (method == "requestCorePermissions" && Build.VERSION.SDK_INT >= 33) permissions += Manifest.permission.POST_NOTIFICATIONS
+        val missing = permissions.filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
+        if (missing.isEmpty()) { result.success(null); AppRuntime.publish(); return }
+        permissionResult = result
+        requestedPermissions = missing
+        try { requestPermissions(missing.toTypedArray(), 71) }
+        catch (_: RuntimeException) {
+            permissionResult = null; requestedPermissions = emptyList()
+            result.error("permission_request_unavailable", "Android konnte die Freigabe nicht öffnen. Bitte unter Einrichtung die App-Berechtigungen öffnen.", null)
+            AppRuntime.publish()
+        }
+    }
+
     private fun openSetting(kind: String) {
         val packageUri = Uri.parse("package:$packageName")
         val intent = when (kind) {
@@ -121,14 +135,27 @@ class MainActivity : FlutterActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 71) { permissionResult?.success(null); permissionResult = null; AppRuntime.publish() }
+        if (requestCode == 71) {
+            val pendingResult = permissionResult
+            val requested = requestedPermissions
+            permissionResult = null; requestedPermissions = emptyList()
+            // The callback may be empty or automatically denied. Read the effective grants.
+            when {
+                Manifest.permission.RECEIVE_SMS in requested && checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED ->
+                    pendingResult?.error("sms_permission_denied", "SMS-Zugriff wurde nicht freigegeben. Öffne unter Einrichtung die App-Berechtigungen und prüfe dort Berechtigungen → SMS. Ist SMS dort gesperrt, muss der Installationsweg oder eine Geräterichtlinie geprüft werden.", null)
+                Build.VERSION.SDK_INT >= 33 && Manifest.permission.POST_NOTIFICATIONS in requested && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED ->
+                    pendingResult?.error("notifications_permission_denied", "Benachrichtigungen wurden nicht freigegeben. Bitte unter Einrichtung die Alarmbenachrichtigungen öffnen und erlauben.", null)
+                else -> pendingResult?.success(null)
+            }
+            AppRuntime.publish()
+        }
     }
     override fun onResume() { super.onResume(); AppRuntime.uiVisible = true; AlarmNotifications.ensureChannels(this); AppRuntime.publish() }
     override fun onPause() { AppRuntime.uiVisible = false; super.onPause() }
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
         streamListener?.let { AppRuntime.listeners.remove(it) }; streamListener = null
         methods?.setMethodCallHandler(null); events?.setStreamHandler(null)
-        permissionResult?.error("cancelled", "Berechtigungsanfrage wurde beendet.", null); permissionResult = null
+        permissionResult?.error("cancelled", "Berechtigungsanfrage wurde beendet.", null); permissionResult = null; requestedPermissions = emptyList()
         super.cleanUpFlutterEngine(flutterEngine)
     }
 }

@@ -1,4 +1,4 @@
-# SMS-Alert 0.1.0: Android-Testversion
+# SMS-Alert 0.1.1: Android-Testversion
 
 Diese Version ist für die ersten abgestimmten Gerätetests vorbereitet.
 Noch keine Kombination aus echtem Telefon, Mobilfunk und DND-Profil ist für den
@@ -7,7 +7,7 @@ SMS-Alarmunterstützung ausdrücklich an.
 
 ## Installation und Update
 
-1. Die signierte Datei `dist/sms-alert-0.1.0-test.apk` auf das Testtelefon kopieren.
+1. Die signierte Datei `dist/sms-alert-0.1.1-test.apk` auf das Testtelefon kopieren.
    Prüfsumme mit `dist/SHA256SUMS` vergleichen.
 2. Die Installation aus der dafür verwendeten Quelle erlauben und die APK öffnen.
    Die App ersetzt nicht die vorhandene SMS-App. Firmenrichtlinien können die
@@ -52,6 +52,35 @@ Optional lässt sich das vorübergehende Anheben der System-Alarmlautstärke akt
 Beim Beenden stellt die App den vorherigen Wert nur wieder her, wenn er noch dem
 von ihr gesetzten Wert entspricht und seitdem kein Neustart stattfand.
 Zwischenzeitliche Nutzeränderungen werden respektiert. Das ist keine DND-Umgehung.
+
+## SMS-Freigabe fehlt weiterhin
+
+Ein Ausrufezeichen bei **SMS empfangen** bedeutet, dass Android der App
+`RECEIVE_SMS` aktuell nicht gewährt. Ab Version 0.1.1 prüft die App das wirksame
+Ergebnis nach dem Dialog; abgelehnte oder automatisch verweigerte Anfragen
+bleiben sichtbar und werden nicht als erfolgreiche Freigabe behandelt.
+
+1. **Einrichtung → SMS empfangen → SMS-Zugriff anfragen** wählen und im Android-
+   Dialog erlauben. Die Benachrichtigungsfreigabe ist ein getrenntes Recht.
+2. Erscheint kein Dialog oder bleibt das Ausrufezeichen, **App-Berechtigungen öffnen**
+   wählen. In Android unter **Berechtigungen → SMS** prüfen und, falls verfügbar,
+   den Zugriff erlauben. Nach Rückkehr aktualisiert sich die Anzeige.
+3. Ist SMS dort gesperrt oder fehlt eine freigebbare Auswahl, Modell,
+   Android-Version und den genauen Systemtext festhalten. Mehrfach abgelehnte
+   Anfragen, Installationsrestriktionen und Geräteverwaltung sind verschiedene
+   Fälle. Die App kann Installations-/Administrationsrechte nicht selbst erteilen.
+
+Ein gewöhnlicher Laufzeitdialog reicht für Androids streng eingeschränktes
+SMS-Recht nur aus, wenn der verantwortliche Installer die Berechtigung zulässt.
+Eine APK-Installation ist daher nicht auf jedem Telefon ein gleichwertiger
+Vertriebsnachweis. Ein App-Update hebt eine solche Installationssperre nicht auf.
+Die vorhandene App für das Update nicht deinstallieren; dabei gingen Regeln und
+Verlauf verloren. Für eine nötige Änderung des Installationswegs erst den konkreten
+Gerätezustand prüfen. Es ist kein Abschalten von Play Protect vorgesehen.
+
+Grundlagen: [RECEIVE_SMS](https://developer.android.com/reference/android/Manifest.permission#RECEIVE_SMS),
+[Android-Laufzeitberechtigungen](https://developer.android.com/training/permissions/requesting),
+[Installationsabhängige Einschränkungen](https://source.android.com/docs/core/permissions/runtime_perms#hard-and-soft-restrictions-in-android-10).
 
 ## Alarm und Pause
 
