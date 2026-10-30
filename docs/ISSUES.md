@@ -39,9 +39,14 @@ P0: frühe Machbarkeits-/Vertriebsentscheidung. P1: MVP, Härtung oder gesondert
 ## Status der Arbeitspakete
 
 Abgeschlossen: #3 (APK-Vertriebsentscheid), #4 (begründeter iOS-No-Go),
-#5 (Flutter-/Build-Grundlage), #6 (Regeln und Persistenz), #9 (Einrichtung/Selbsttest).
+#5 (Flutter-/Build-Grundlage), #6 (Regeln und Persistenz).
 Die Implementierung der übrigen Pakete ist ebenfalls vorhanden. #2, #7, #8,
 #10, #11, #12, #13 und #14 bleiben für die in ihren Abnahmekriterien geforderten
 realen Geräte-, Mobilfunk-, Audio-/DND-/OEM-/Backup- und Pilotprüfungen offen.
 Sie werden nicht allein wegen Emulatorerfolgen als freigegeben geschlossen.
 #1 bleibt die zentrale Abnahmeübersicht.
+
+Update 0.1.1: #9 ist wegen des Anwenderberichts zur fehlenden SMS-Freigabe wieder
+geöffnet. Effektive Freigaben werden geprüft, Ablehnungen erklärt und
+App-Berechtigungen direkt angeboten. [Dialogtests und Grenzen](testing/PERMISSIONS-0.1.1.md)
+sind dokumentiert; die Bestätigung auf dem konkreten Anwendertelefon steht aus.

@@ -64,6 +64,8 @@ try:
  button('App-Berechtigungen öffnen')
  assert any(n.attrib.get('package')=='com.android.settings' for n in nodes());record('app_permission_settings_open_from_sms_card')
  button('Permissions');button('SMS');button('Allow',scroll=False);wait(sms_granted)
+ # Return through the Settings stack just as a user does after granting access.
+ for _ in range(3):adb('shell','input','keyevent','KEYCODE_BACK');time.sleep(.3)
  openapp();button('Einrichtung');wait(lambda:text_visible('SMS-Empfang ist freigegeben.'))
  assert not text_visible('SMS-Zugriff anfragen');record('manual_settings_grant_refreshes_sms_check')
  install();button('SMS-Zugriff anfragen');button(resource=':id/permission_allow_button',scroll=False);wait(sms_granted)

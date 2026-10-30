@@ -1,0 +1,33 @@
+{
+  "timestamp_utc": "2026-10-30T16:32:08.834083+00:00",
+  "apk_sha256": "5a66b0c925c41ef9dff98ca8c13622998b73b11ff3ad236858a1d2a0f03323db",
+  "platform_api": "37",
+  "scope": "AOSP emulator, real permission-controller dialogs and real install --restrict-permissions. No pm grant used. No claim about the user phone installer or OEM.",
+  "results": [
+    {
+      "case": "sms_dialog_denial_reported_and_check_stays_missing",
+      "status": "PASS"
+    },
+    {
+      "case": "permanent_denial_without_dialog_has_recovery_message",
+      "status": "PASS"
+    },
+    {
+      "case": "app_permission_settings_open_from_sms_card",
+      "status": "PASS"
+    },
+    {
+      "case": "manual_settings_grant_refreshes_sms_check",
+      "status": "PASS"
+    },
+    {
+      "case": "first_sms_dialog_allow_refreshes_check_without_notification_request",
+      "status": "PASS"
+    },
+    {
+      "case": "installer_restricted_sms_is_not_reported_as_granted",
+      "status": "PASS",
+      "permission_flags": "android.permission.RECEIVE_SMS: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|APPLY_RESTRICTION]"
+    }
+  ]
+}
