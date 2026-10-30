@@ -38,7 +38,8 @@ def pending():return [e for e in db()['events'] if e['status']=='PENDING']
 def foreground():return 'isForeground=true' in adb('shell','dumpsys','activity','services',P)
 def playing():return db()['meta'].get('lastOutcome')=='playback_started' and foreground()
 def nodes():
- adb('shell','uiautomator','dump','/data/local/tmp/sms-alert-ui.xml')
+ output=adb('shell','uiautomator','dump','/data/local/tmp/sms-alert-ui.xml')
+ if 'dumped to:' not in output:raise RuntimeError('No fresh UI hierarchy: '+output)
  return list(ET.fromstring(adb('shell','cat','/data/local/tmp/sms-alert-ui.xml')).iter('node'))
 def tap(node):
  x1,y1,x2,y2=map(int,re.findall(r'\d+',node.attrib['bounds']));adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2));time.sleep(.2)

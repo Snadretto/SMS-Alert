@@ -23,8 +23,11 @@ class AlarmActivity : Activity() {
             val store = AppRuntime.store(this@AlarmActivity)
             val next = store.nextPending()
             if (next == null || next["id"] != expectedId || !store.settings().enabled) { finish(); return }
-            title.text = if (next["source"] == "TEST") "TESTALARM" else "Pikett-Alarm"
-            subtitle.text = "${store.pendingCount()} offene Alarme\nQuittierung gilt nur auf diesem Gerät."
+            val nextTitle = if (next["source"] == "TEST") "TESTALARM" else "Pikett-Alarm"
+            val nextSubtitle = "${store.pendingCount()} offene Alarme\nQuittierung gilt nur auf diesem Gerät."
+            // Avoid continuously announcing unchanged text and preventing accessibility idle.
+            if (title.text.toString() != nextTitle) title.text = nextTitle
+            if (subtitle.text.toString() != nextSubtitle) subtitle.text = nextSubtitle
             handler.postDelayed(this, 500)
         }
     }
@@ -35,6 +38,7 @@ class AlarmActivity : Activity() {
         setShowWhenLocked(true); setTurnScreenOn(true)
         val column = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; gravity = Gravity.CENTER_VERTICAL }
         val padding = (24 * resources.displayMetrics.density).toInt()
+        column.setPadding(padding, padding, padding, padding)
         column.setOnApplyWindowInsetsListener { view, insets ->
             val bars = insets.getInsets(WindowInsets.Type.systemBars())
             view.setPadding(padding + bars.left, padding + bars.top, padding + bars.right, padding + bars.bottom)

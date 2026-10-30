@@ -23,7 +23,7 @@ adb('install','-r',str(a.probe.resolve()))
 # Root attaches to app threads, but app keeps its original UID and permissions.
 pid=adb('shell','pidof',P);assert pid.isdecimal()
 trace='/data/local/tmp/sms-alert-network.trace'
-process=subprocess.Popen([a.adb,'-s',a.serial,'shell','strace','-f','-e','trace=network','-s','256','-p',pid,'-o',trace],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+process=subprocess.Popen([a.adb,'-s',a.serial,'shell','strace','-f','-e','trace=network,ioctl','-s','256','-p',pid,'-o',trace],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 time.sleep(1)
 try:
  before=state()
