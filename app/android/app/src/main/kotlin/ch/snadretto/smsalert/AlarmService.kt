@@ -89,7 +89,7 @@ class AlarmService : Service() {
         try {
             AlarmNotifications.ensureChannels(this)
             if (!AlarmNotifications.allowed(this)) { store.setMeta("lastOutcome", "notifications_blocked"); stopSelf(startId); return START_NOT_STICKY }
-            startForeground(AlarmNotifications.ALARM_ID, AlarmNotifications.alarm(this, event, store.pendingCount()), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+            startForeground(AlarmNotifications.ALARM_ID, AlarmNotifications.alarm(this, event, store.pendingCount(), activeId != event["id"]), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
             running = true
         } catch (_: RuntimeException) {
             store.setMeta("lastOutcome", "background_start_blocked")

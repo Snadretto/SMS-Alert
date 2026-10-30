@@ -123,7 +123,8 @@ class MainActivity : FlutterActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 71) { permissionResult?.success(null); permissionResult = null; AppRuntime.publish() }
     }
-    override fun onResume() { super.onResume(); AlarmNotifications.ensureChannels(this); AppRuntime.publish() }
+    override fun onResume() { super.onResume(); AppRuntime.uiVisible = true; AlarmNotifications.ensureChannels(this); AppRuntime.publish() }
+    override fun onPause() { AppRuntime.uiVisible = false; super.onPause() }
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
         streamListener?.let { AppRuntime.listeners.remove(it) }; streamListener = null
         methods?.setMethodCallHandler(null); events?.setStreamHandler(null)

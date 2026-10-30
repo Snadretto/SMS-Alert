@@ -18,6 +18,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 import java.util.concurrent.Executors
 
 object AppRuntime {
+    @Volatile var uiVisible = false
     val worker = Executors.newSingleThreadExecutor()
     val main = Handler(Looper.getMainLooper())
     val listeners = CopyOnWriteArraySet<() -> Unit>()

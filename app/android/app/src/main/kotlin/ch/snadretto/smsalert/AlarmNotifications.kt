@@ -56,7 +56,7 @@ object AlarmNotifications {
         context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
     )
 
-    fun alarm(context: Context, event: Map<String, Any?>, count: Int): Notification {
+    fun alarm(context: Context, event: Map<String, Any?>, count: Int, newActiveEvent: Boolean): Notification {
         val id = event["id"] as String
         val openAlarm = PendingIntent.getActivity(context, 0, Intent(context, AlarmActivity::class.java).apply {
             data = Uri.parse("smsalert://alarm/$id")
@@ -74,7 +74,8 @@ object AlarmNotifications {
             setOnlyAlertOnce(true)
             setContentIntent(openAlarm)
             addAction(Notification.Action.Builder(null, "Diesen Alarm quittieren", pendingAction(context, ACTION_ACK, id)).build())
-            if (fullScreenAllowed(context)) setFullScreenIntent(openAlarm, true)
+            // A count refresh must not relaunch a full-screen task or interrupt the Flutter UI.
+            if (newActiveEvent && !AppRuntime.uiVisible && fullScreenAllowed(context)) setFullScreenIntent(openAlarm, true)
         }.build()
     }
 

@@ -37,7 +37,8 @@ def button(label,top=False):
    text=n.attrib.get('text') or n.attrib.get('content-desc','')
    if text.split('\n')[0].casefold()==label.casefold() and n.attrib.get('enabled')=='true':
     x1,y1,x2,y2=map(int,re.findall(r'\d+',n.attrib['bounds']));adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2));time.sleep(.2);return
-  adb('shell','input','swipe','540','1700','540','650','200')
+  if label in ('Alle quittieren', 'Offenen Alarm fortsetzen', 'Übersicht', 'Einrichtung'):openapp()
+  else:adb('shell','input','swipe','540','1700','540','650','200')
  raise RuntimeError('Button not found: '+label)
 def openapp():
  adb('shell','input','keyevent','KEYCODE_WAKEUP');adb('shell','input','keyevent','82');adb('shell','am','start','-W','-n',P+'/.MainActivity')
