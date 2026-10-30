@@ -29,7 +29,7 @@ jobs:
           .tools/flutter/bin/flutter config --no-analytics
       - name: Android SDK
         run: |
-          sdkmanager 'platforms;android-37.0' 'build-tools;36.0.0' 'cmake;3.22.1'
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-37.0' 'build-tools;36.0.0' 'cmake;3.22.1'
           python3 tools/install_ndk.py
       - name: Dart checks
         working-directory: app
