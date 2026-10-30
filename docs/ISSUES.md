@@ -1,0 +1,29 @@
+# GitHub-Arbeitspakete
+
+Stand: 29. Oktober 2026. Die folgenden Issues wurden angelegt und per API geprüft.
+
+Zentrale Übersicht: [#1 – [Plan] SMS-Alert: Android-MVP, Betriebsgrenzen und bedingte iOS-Option](https://github.com/Snadretto/SMS-Alert/issues/1)
+
+Arbeitsstand 30. Oktober 2026: A01 / #2 ist gestartet. Der
+[Prototyp-Bericht](A01-ANDROID-SPIKE.md) dokumentiert den Stand;
+das Issue bleibt bis zum erforderlichen Gerätenachweis offen.
+
+| Paket | Phase | Priorität | Issue | Abhängigkeiten |
+| --- | --- | --- | --- | --- |
+| A01 | M0: Machbarkeit | P0 | [#2 – Android-Machbarkeit: echte SMS startet anhaltenden Alarm im Hintergrund](https://github.com/Snadretto/SMS-Alert/issues/2) | — |
+| A02 | M0: Machbarkeit | P0 | [#3 – Android-Vertrieb und SMS-Berechtigungen entscheiden](https://github.com/Snadretto/SMS-Alert/issues/3) | — |
+| I01 | iOS: eigenständige Entscheidung | P1 | [#4 – Offline-SMS-Alarmierung und EU-Sonderweg auf Machbarkeit prüfen](https://github.com/Snadretto/SMS-Alert/issues/4) | — |
+| A03 | M1: Android-MVP | P1 | [#5 – Flutter-Projekt, native Plattformverträge und Build-Grundlage aufsetzen](https://github.com/Snadretto/SMS-Alert/issues/5) | [#2](https://github.com/Snadretto/SMS-Alert/issues/2), [#3](https://github.com/Snadretto/SMS-Alert/issues/3) |
+| A04 | M1: Android-MVP | P1 | [#6 – Lokale Regeln, native Auswertung und versionierte Persistenz implementieren](https://github.com/Snadretto/SMS-Alert/issues/6) | [#5](https://github.com/Snadretto/SMS-Alert/issues/5) |
+| A05 | M1: Android-MVP | P1 | [#7 – Android-SMS-Empfang mit Mehrteilern, Dual-SIM und Deduplizierung umsetzen](https://github.com/Snadretto/SMS-Alert/issues/7) | [#2](https://github.com/Snadretto/SMS-Alert/issues/2), [#6](https://github.com/Snadretto/SMS-Alert/issues/6) |
+| A06 | M1: Android-MVP | P1 | [#8 – Nativen Daueralarm mit Ton, Vibration und robuster Quittierung bauen](https://github.com/Snadretto/SMS-Alert/issues/8) | [#2](https://github.com/Snadretto/SMS-Alert/issues/2), [#6](https://github.com/Snadretto/SMS-Alert/issues/6), [#7](https://github.com/Snadretto/SMS-Alert/issues/7) |
+| A07 | M1: Android-MVP | P1 | [#9 – Geführte Einrichtung, Berechtigungsdiagnose und lokalen Testalarm entwickeln](https://github.com/Snadretto/SMS-Alert/issues/9) | [#5](https://github.com/Snadretto/SMS-Alert/issues/5), [#8](https://github.com/Snadretto/SMS-Alert/issues/8) |
+| A08 | M1: Android-MVP | P1 | [#10 – Flutter-Oberfläche für Regeln, Alarmanzeige und dauerhafte App-Pause erstellen](https://github.com/Snadretto/SMS-Alert/issues/10) | [#6](https://github.com/Snadretto/SMS-Alert/issues/6), [#8](https://github.com/Snadretto/SMS-Alert/issues/8), [#9](https://github.com/Snadretto/SMS-Alert/issues/9) |
+| A09 | M2: Härtung | P1 | [#11 – Lebenszyklus, Geräte-Neustart und Direct-Boot-Verhalten absichern](https://github.com/Snadretto/SMS-Alert/issues/11) | [#7](https://github.com/Snadretto/SMS-Alert/issues/7), [#8](https://github.com/Snadretto/SMS-Alert/issues/8), [#10](https://github.com/Snadretto/SMS-Alert/issues/10) |
+| A10 | M2: Härtung | P1 | [#12 – Datenminimierung, lokales Ereignisprotokoll und Netzwerkfreiheit nachweisen](https://github.com/Snadretto/SMS-Alert/issues/12) | [#5](https://github.com/Snadretto/SMS-Alert/issues/5), [#6](https://github.com/Snadretto/SMS-Alert/issues/6), [#7](https://github.com/Snadretto/SMS-Alert/issues/7), [#8](https://github.com/Snadretto/SMS-Alert/issues/8), [#9](https://github.com/Snadretto/SMS-Alert/issues/9), [#10](https://github.com/Snadretto/SMS-Alert/issues/10), [#11](https://github.com/Snadretto/SMS-Alert/issues/11) |
+| A11 | M2: Abnahme | P1 | [#13 – Geräte-Matrix, echte SMS und Dauertests als Release-Abnahme durchführen](https://github.com/Snadretto/SMS-Alert/issues/13) | [#9](https://github.com/Snadretto/SMS-Alert/issues/9), [#10](https://github.com/Snadretto/SMS-Alert/issues/10), [#11](https://github.com/Snadretto/SMS-Alert/issues/11), [#12](https://github.com/Snadretto/SMS-Alert/issues/12) |
+| A12 | M3: Pilot und Release | P2 | [#14 – Signierte Pilot-APK, Update-Weg und Betriebsanleitung bereitstellen](https://github.com/Snadretto/SMS-Alert/issues/14) | [#3](https://github.com/Snadretto/SMS-Alert/issues/3), [#12](https://github.com/Snadretto/SMS-Alert/issues/12), [#13](https://github.com/Snadretto/SMS-Alert/issues/13) |
+
+Der vollständige lokale [Umsetzungsplan](PLAN.md) erläutert Anforderungen, Plattformgrenzen, Architektur, Phasen und Tests.
+
+P0: frühe Machbarkeits-/Vertriebsentscheidung. P1: MVP, Härtung oder gesonderte iOS-Prüfung. P2: Pilot nach bestandener Abnahme.
