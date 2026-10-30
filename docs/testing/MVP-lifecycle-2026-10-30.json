@@ -1,0 +1,38 @@
+{
+  "apk_sha256": "ca4d9caa6bc1f67be619e91fa42f5f01ce8d965e73f0080c51dc672ed4c3efd0",
+  "scope": "Rooted AOSP emulator with synthetic SMS, no physical-device proof; reboot has no secure PIN.",
+  "results": [
+    {
+      "case": "notification_action_acknowledges_and_stops_service",
+      "status": "PASS"
+    },
+    {
+      "case": "new_sms_with_identical_text_is_not_body_cooldown",
+      "status": "PASS"
+    },
+    {
+      "case": "active_reboot_preserves_pending_without_boot_media_service",
+      "status": "PASS"
+    },
+    {
+      "case": "active_update_preserves_unacknowledged_event",
+      "status": "PASS"
+    },
+    {
+      "case": "manual_resume_after_boot_and_ack_no_resurrection",
+      "status": "PASS"
+    },
+    {
+      "case": "paused_reboot_does_not_reactivate",
+      "status": "PASS"
+    },
+    {
+      "case": "revoked_sms_permission_blocks_receive_without_changing_desired_activation",
+      "status": "PASS"
+    },
+    {
+      "case": "restored_permission_accepts_new_sms_pause_still_stops",
+      "status": "PASS"
+    }
+  ]
+}

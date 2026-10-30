@@ -26,9 +26,11 @@ def wait(f,timeout=20):
  raise RuntimeError('Timed out: '+str(f))
 def foreground():return 'isForeground=true' in adb('shell','dumpsys','activity','services',P)
 def nodes():
- output=adb('shell','uiautomator','dump','/data/local/tmp/lifecycle-ui.xml')
- if 'dumped to:' not in output:raise RuntimeError('No fresh UI hierarchy: '+output)
- return list(ET.fromstring(adb('shell','cat','/data/local/tmp/lifecycle-ui.xml')).iter('node'))
+ for attempt in range(4):
+  output=adb('shell','uiautomator','dump','/data/local/tmp/lifecycle-ui.xml')
+  if 'dumped to:' in output:return list(ET.fromstring(adb('shell','cat','/data/local/tmp/lifecycle-ui.xml')).iter('node'))
+  adb('shell','input','keyevent','KEYCODE_WAKEUP');time.sleep(.5)
+ raise RuntimeError('No fresh UI hierarchy: '+output)
 def button(label,top=False):
  if top:
   for _ in range(3):adb('shell','input','swipe','540','600','540','1800','200')
@@ -41,6 +43,7 @@ def button(label,top=False):
   else:adb('shell','input','swipe','540','1700','540','650','200')
  raise RuntimeError('Button not found: '+label)
 def openapp():
+ adb('shell','cmd','statusbar','collapse')
  adb('shell','input','keyevent','KEYCODE_WAKEUP');adb('shell','input','keyevent','82');adb('shell','am','start','-W','-n',P+'/.MainActivity')
 def sms(text):adb('emu','sms','send','15551234567',text)
 def record(case):results.append({'case':case,'status':'PASS'});print('PASS: '+case,flush=True)

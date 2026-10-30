@@ -120,3 +120,20 @@ python3 tools/emulator_smoke.py \
 Das Testgerät bleibt ohne Host-Audio. Physische Vibration, Hörbarkeit, echte
 Mobilfunkzustellung und OEM-Energieverwaltung sind damit nicht bewiesen.
 Eigene Tondateien lassen sich mit `python3 tools/generate_tones.py` regenerieren.
+
+Zusätzliche Emulatorprüfungen liegen in `tools/emulator_lifecycle.py`
+(Notification-Aktion, identische neue SMS, Reboot, Update, Rechteentzug) und
+`tools/emulator_privacy_security.py` (fremde App-UID und strace während UI/SMS).
+Die Privacy-Prüfung erwartet einen über die Oberfläche aktivierten Smoke-Test-Zustand.
+Sie legt ein offenes synthetisches Ereignis an; danach kann der Lifecycle-Test starten.
+Die getrennte Probe-App lässt sich ohne Flutter so bauen:
+
+```bash
+app/android/gradlew -p tests/android-security-probe assembleDebug
+```
+
+Sie fordert keine Rechte an und gehört nicht zur ausgelieferten App.
+Privilegierte Shell-Broadcasts sind kein Ersatz für eine fremde App-UID.
+Die Netzwerkprüfung erfasst Netzwerk- und IOCTL-Aufrufe, damit auch lokale Binder-
+Aktivität als Nachweis eines tatsächlich angehängten Tracers sichtbar ist.
+Sie beansprucht keine vollständige Abdeckung jedes denkbaren Ausführungspfads.

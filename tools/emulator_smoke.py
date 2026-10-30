@@ -38,9 +38,11 @@ def pending():return [e for e in db()['events'] if e['status']=='PENDING']
 def foreground():return 'isForeground=true' in adb('shell','dumpsys','activity','services',P)
 def playing():return db()['meta'].get('lastOutcome')=='playback_started' and foreground()
 def nodes():
- output=adb('shell','uiautomator','dump','/data/local/tmp/sms-alert-ui.xml')
- if 'dumped to:' not in output:raise RuntimeError('No fresh UI hierarchy: '+output)
- return list(ET.fromstring(adb('shell','cat','/data/local/tmp/sms-alert-ui.xml')).iter('node'))
+ for attempt in range(4):
+  output=adb('shell','uiautomator','dump','/data/local/tmp/sms-alert-ui.xml')
+  if 'dumped to:' in output:return list(ET.fromstring(adb('shell','cat','/data/local/tmp/sms-alert-ui.xml')).iter('node'))
+  adb('shell','input','keyevent','KEYCODE_WAKEUP');time.sleep(.5)
+ raise RuntimeError('No fresh UI hierarchy: '+output)
 def tap(node):
  x1,y1,x2,y2=map(int,re.findall(r'\d+',node.attrib['bounds']));adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2));time.sleep(.2)
 def label(n):return n.attrib.get('text') or n.attrib.get('content-desc','')
@@ -61,6 +63,7 @@ def field(identifier,value):
   swipe()
  raise RuntimeError('Field not found: '+identifier)
 def openapp():
+ adb('shell','cmd','statusbar','collapse')
  adb('shell','input','keyevent','KEYCODE_WAKEUP');adb('shell','input','keyevent','82');adb('shell','am','start','-W','-n',P+'/.MainActivity')
 def killprocess():
  pid=adb('shell','pidof',P,check=False)
@@ -71,6 +74,7 @@ def sms(body,sender='15551234567'):adb('emu','sms','send',sender,body)
 try:
  assert adb('shell','getprop','ro.kernel.qemu')=='1'
  assert adb('shell','id','-u')=='0','AOSP adb root required for read-only verification'
+ adb('shell','settings','put','system','screen_off_timeout','2147483647')
  adb('install','-r',str(a.apk.resolve()),timeout=90);adb('shell','pm','clear',P)
  api=int(adb('shell','getprop','ro.build.version.sdk'));platform=f'Android API {api} / AOSP x86_64 emulator'
  for right in (('RECEIVE_SMS','POST_NOTIFICATIONS') if api>=33 else ('RECEIVE_SMS',)):adb('shell','pm','grant',P,'android.permission.'+right)

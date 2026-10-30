@@ -1,0 +1,23 @@
+{
+  "apk_sha256": "ca4d9caa6bc1f67be619e91fa42f5f01ce8d965e73f0080c51dc672ed4c3efd0",
+  "platform_api": "31",
+  "target_uid": "10107",
+  "probe_uid": 10108,
+  "cases": [
+    {
+      "case": "protected_sms_intent_rejected_for_unprivileged_installed_app",
+      "status": "PASS"
+    },
+    {
+      "case": "private_pause_intent_does_not_change_target_state",
+      "status": "PASS"
+    },
+    {
+      "case": "attached_network_syscalls_during_ui_and_synthetic_sms",
+      "status": "PASS",
+      "ip_socket_attempts": 0,
+      "trace_lines": 690
+    }
+  ],
+  "limits": "Trace covers already running app threads, UI resume and synthetic SMS, not every possible cold-start path. IPC via Binder/AF_UNIX is allowed. Packaged release lacks INTERNET independently."
+}

@@ -1,0 +1,57 @@
+{
+  "timestamp_utc": "2026-10-30T13:38:08.984394+00:00",
+  "apk_sha256": "44e4804007a3c54f025755bbfaf6e440cca89ebeb3fa3cce9408600a8d3cf28b",
+  "platform": "Android 17 / API 37 AOSP x86_64 emulator",
+  "scope": "Synthetic SMS, release-mode APK; no real carrier, physical vibration, audibility or OEM proof. IP interfaces disabled.",
+  "results": [
+    {
+      "case": "fresh_install_paused",
+      "status": "PASS"
+    },
+    {
+      "case": "rule_created_through_flutter_ui",
+      "status": "PASS"
+    },
+    {
+      "case": "non_matching_sms_ignored",
+      "status": "PASS"
+    },
+    {
+      "case": "local_test_and_acknowledgement",
+      "status": "PASS"
+    },
+    {
+      "case": "cold_process_sms_screen_off_starts_native_alarm",
+      "status": "PASS",
+      "latency_ms": 251
+    },
+    {
+      "case": "two_events_individual_ack_preserves_second",
+      "status": "PASS"
+    },
+    {
+      "case": "continuous_alarm_soak",
+      "status": "PASS",
+      "duration_seconds": 1800,
+      "samples": 60,
+      "physical_audio_verified": false
+    },
+    {
+      "case": "pause_resolves_queue_and_paused_sms_not_stored",
+      "status": "PASS"
+    },
+    {
+      "case": "signed_update_preserves_rule_and_pause",
+      "status": "PASS"
+    },
+    {
+      "case": "force_stop_negative_case_no_false_delivery",
+      "status": "PASS"
+    },
+    {
+      "case": "smoke_test_failure",
+      "status": "FAIL",
+      "error": ""
+    }
+  ]
+}

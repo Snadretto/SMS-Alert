@@ -1,0 +1,7 @@
+{
+  "version": "0.1.0+2",
+  "source_commit": "29387e12d4bee592473341f3ec436df7b21a3ab6",
+  "source_url": "https://github.com/Snadretto/SMS-Alert/tree/29387e12d4bee592473341f3ec436df7b21a3ab6",
+  "apk_sha256": "ca4d9caa6bc1f67be619e91fa42f5f01ce8d965e73f0080c51dc672ed4c3efd0",
+  "signing": "persistent local test key; not production/store signing"
+}

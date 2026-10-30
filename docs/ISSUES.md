@@ -35,3 +35,13 @@ nachgewiesene Aufgaben abgehakt; Hardwaretests bleiben offen.
 Der vollständige lokale [Umsetzungsplan](PLAN.md) erläutert Anforderungen, Plattformgrenzen, Architektur, Phasen und Tests.
 
 P0: frühe Machbarkeits-/Vertriebsentscheidung. P1: MVP, Härtung oder gesonderte iOS-Prüfung. P2: Pilot nach bestandener Abnahme.
+
+## Status der Arbeitspakete
+
+Abgeschlossen: #3 (APK-Vertriebsentscheid), #4 (begründeter iOS-No-Go),
+#5 (Flutter-/Build-Grundlage), #6 (Regeln und Persistenz), #9 (Einrichtung/Selbsttest).
+Die Implementierung der übrigen Pakete ist ebenfalls vorhanden. #2, #7, #8,
+#10, #11, #12, #13 und #14 bleiben für die in ihren Abnahmekriterien geforderten
+realen Geräte-, Mobilfunk-, Audio-/DND-/OEM-/Backup- und Pilotprüfungen offen.
+Sie werden nicht allein wegen Emulatorerfolgen als freigegeben geschlossen.
+#1 bleibt die zentrale Abnahmeübersicht.
