@@ -1,37 +1,41 @@
 # SMS-Alert
 
-SMS-Alert ist eine geplante, lokal arbeitende App für SMS-basierte
-Pikett-Alarmierung. Passende Absender oder Nachrichtentexte sollen einen
-anhaltenden Alarm mit Ton und Vibration auslösen, bis dieser quittiert wird.
-Ein eigener Pausenmodus soll die Alarmierung bis zur manuellen Reaktivierung
-abschalten.
+Lokale SMS-Pikettalarmierung für Android: Passende Absender oder Textbestandteile
+starten einen anhaltenden Alarm mit Ton und Vibration bis zur Quittierung.
+Eine eigene App-Pause unterdrückt die Alarmierung bis zur manuellen Reaktivierung.
 
-## Projektstand
+Die **Android-Testversion 0.1.0** ist in Flutter mit nativer Kotlin-Anbindung
+implementiert. Sie bietet mehrere Regeln mit UND/ODER und SIM-Filter,
+Regelvorschau, Alarmwarteschlange, Einzel-/Gesamtquittierung, dauerhafte Pause,
+geführte Einrichtung, lokalen Selbsttest, zwei Alarmtöne und begrenzten Verlauf.
+SMS-Empfang und Alarmdienst benötigen keine laufende Flutter-Oberfläche.
+Keine Konten, Backend, Tracking, Push oder eigenen Laufzeit-Netzwerkverbindungen;
+die signierte Test-Release-APK besitzt keine INTERNET-Berechtigung.
 
-Das Projekt befindet sich in der Machbarkeitsphase. Es gibt noch keine freigegebene
-Produktversion. Für [Issue #2](https://github.com/Snadretto/SMS-Alert/issues/2)
-entsteht ein isolierter [nativer Android-Prototyp](spikes/android-sms-alarm/README.md).
-Der [A01-Bericht](docs/A01-ANDROID-SPIKE.md) unterscheidet technische Prüfungen
-von noch offenen Tests auf echten Geräten. Vorgesehen sind
-Flutter für die Oberfläche und native Plattformanbindungen für SMS und Alarme.
-Die App soll ohne eigene Netzwerkverbindungen, Backend, Tracking oder Cloud-Dienste
-arbeiten.
+**Stand: Testkandidat, noch keine Freigabe für den Pikettdienst.**
+Automatisierte Prüfungen und Emulatorläufe ersetzen keine echte SMS-Zustellung,
+hörbaren Ton, physische Vibration oder Hersteller-/DND-Tests auf echten Telefonen.
+Android 12 ist die Mindestversion. Alarmierung in jedem beliebigen Gerätezustand
+ist keine haltbare Zusage. Vor erster Entsperrung nach Neustart sowie nach
+Force-Stop bestehen ausdrückliche Grenzen. iOS ist für die unveränderten
+Anforderungen einschließlich Schweiz nicht gleichwertig umsetzbar; der vorbereitete
+Flutter-Adapter meldet dies ausdrücklich.
 
-Eine Alarmierung in jedem Gerätezustand ist kein technisch haltbares Versprechen.
-Die Unterstützung von Lautlosmodus, Nicht stören und Hintergrundbetrieb muss pro
-Systemversion, Berechtigungskonfiguration und Gerät nachgewiesen werden.
-iOS ist eine gesonderte Machbarkeitsentscheidung mit regionalen Einschränkungen.
+- [Installation, Einrichtung und Bedienung](docs/USER-GUIDE.md)
+- [Build, Signierung und Prüfungen](docs/BUILD.md)
+- [Automatisierte Nachweise und offene Geräteabnahme](docs/testing/MVP-REPORT.md)
+- [Produkt- und Plattformentscheidungen](docs/IMPLEMENTATION-DECISIONS.md)
+- [Plan](docs/PLAN.md), [Issue-Übersicht](docs/ISSUES.md), [GitHub-Issues](https://github.com/Snadretto/SMS-Alert/issues)
 
-Der [Umsetzungsplan](docs/PLAN.md) beschreibt Anforderungen, Grenzen,
-Arbeitspakete und Abnahmekriterien. Die Arbeit wird über
-[GitHub-Issues](https://github.com/Snadretto/SMS-Alert/issues) verfolgt.
+App-Code: `app/`. Der ältere [Machbarkeitsprototyp](spikes/android-sms-alarm/README.md)
+bleibt als nachvollziehbare Untersuchung erhalten. Der lokale signierte Build
+entsteht mit `python3 tools/build_test_apk.py` unter `dist/`; Schlüssel und
+Build-Artefakte werden nicht ins Git-Repository aufgenommen.
 
-## Entstehung
+## Entstehung und Lizenz
 
-Der Programmcode dieses Projekts wird mit GPT-6.1 Sol generiert.
-Idee, Konzeption und Design stammen von Snadretto.
+Der Programmcode dieses Projekts wird mit **GPT-6.1 Sol** generiert.
+Idee, Konzeption und Design stammen von **Snadretto**.
 
-## Lizenz
-
-Dieses Projekt steht unter der [Apache License 2.0](LICENSE).
-Der Urheberhinweis befindet sich in der Datei [NOTICE](NOTICE).
+[Apache License 2.0](LICENSE), [Urheberhinweis](NOTICE) und
+[Hinweise zu Abhängigkeiten und Assets](docs/THIRD-PARTY.md).

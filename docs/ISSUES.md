@@ -4,9 +4,17 @@ Stand: 29. Oktober 2026. Die folgenden Issues wurden angelegt und per API geprü
 
 Zentrale Übersicht: [#1 – [Plan] SMS-Alert: Android-MVP, Betriebsgrenzen und bedingte iOS-Option](https://github.com/Snadretto/SMS-Alert/issues/1)
 
-Arbeitsstand 30. Oktober 2026: A01 / #2 ist gestartet. Der
-[Prototyp-Bericht](A01-ANDROID-SPIKE.md) dokumentiert den Stand;
-das Issue bleibt bis zum erforderlichen Gerätenachweis offen.
+Arbeitsstand 30. Oktober 2026: Die Android-Testversion wird in
+[PR #15](https://github.com/Snadretto/SMS-Alert/pull/15) umgesetzt.
+Die Implementierung der Pakete A03–A10 sowie Test-APK und Anleitung sind vorhanden;
+A02 wählt den direkten APK-Testweg, I01 dokumentiert ein No-Go für unverändertes iOS
+inklusive Schweiz. Die ursprüngliche Reihenfolge „erst physischer G0, dann MVP“
+wurde auf ausdrücklichen Folgeauftrag geändert. Es gibt weiterhin keine Gerätefreigabe.
+
+[Automatisierte Nachweise](testing/MVP-REPORT.md) und
+[Betriebsentscheidungen](IMPLEMENTATION-DECISIONS.md) trennen erledigte
+Implementierung von offener Geräte-/Pilotabnahme. In den Issues werden nur
+nachgewiesene Aufgaben abgehakt; Hardwaretests bleiben offen.
 
 | Paket | Phase | Priorität | Issue | Abhängigkeiten |
 | --- | --- | --- | --- | --- |

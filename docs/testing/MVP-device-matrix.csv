@@ -1,0 +1,7 @@
+model,manufacturer,android_version,target_api,apk_sha256,source_commit,sim_carrier,case,permissions_and_settings,repetitions,received_events,lost_events,start_latency_ms,audible,vibration,ack_path,result,notes
+TBD,Google Pixel,TBD,37,TBD,TBD,TBD,real_sms_cold_process_screen_locked,TBD,0,,,,,,app_and_notification,NOT_RUN,No device release yet
+TBD,Samsung,TBD,37,TBD,TBD,TBD,real_sms_dnd_profiles,TBD,0,,,,,,app_and_notification,NOT_RUN,Test each DND and OEM profile separately
+TBD,Restrictive OEM,TBD,37,TBD,TBD,TBD,doze_battery_saver_30min,TBD,0,,,,,,app_and_notification,NOT_RUN,Record energy and any dropped alarms
+TBD,TBD,TBD,37,TBD,TBD,Dual_SIM_eSIM,multipart_unicode_sender_and_sim_filters,TBD,0,,,,,,app,NOT_RUN,Unknown SIM must not match a specific filter
+TBD,TBD,TBD,37,TBD,TBD,TBD,pause_update_reboot_permissions_force_stop,TBD,0,,,,,,app,NOT_RUN,Before first unlock intentionally unsupported
+TBD,TBD,TBD,37,TBD,TBD,TBD,volume_zero_opt_in_restore_user_changes_call_bluetooth,TBD,0,,,,,,app,NOT_RUN,No unconditional DND bypass guarantee

@@ -1,0 +1,21 @@
+SMS-Alert
+Copyright 2026 Snadretto
+Apache License 2.0; see the bundled LICENSE and NOTICE.
+
+Google libphonenumber 9.0.42
+Copyright The Libphonenumber Authors.
+Licensed under the Apache License, Version 2.0.
+https://github.com/google/libphonenumber
+
+Kotlin standard library
+Copyright JetBrains s.r.o. and Kotlin Programming Language contributors.
+Licensed under the Apache License, Version 2.0.
+https://github.com/JetBrains/kotlin
+
+AndroidX libraries used by Flutter's Android embedding
+Copyright The Android Open Source Project / AndroidX contributors.
+Licensed under the Apache License, Version 2.0.
+https://android.googlesource.com/platform/frameworks/support/
+
+Flutter, Dart, fonts and Dart dependencies retain their own notices in the
+locally generated Flutter license registry. No remote resources are loaded.

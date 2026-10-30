@@ -6,3 +6,13 @@ local.properties
 *.jks
 *.keystore
 .DS_Store
+.tools/
+dist/
+**/.dart_tool/
+**/.flutter-plugins-dependencies
+**/signing.properties
+**/key.properties
+**/Pods/
+**/.symlinks/
+__pycache__/
+*.pyc

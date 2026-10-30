@@ -1,5 +1,12 @@
 # SMS-Alert: Machbarkeit und Umsetzungsplan
 
+> Arbeitsstand 30.10.2026: Auf ausdrücklichen Folgeauftrag wird der Android-MVP
+> vor der ersten manuellen Geräteabnahme fertiggestellt. Das ändert die Reihenfolge
+> des ursprünglichen Gates G0, stellt aber keine Pikett-Freigabe dar. Produktentscheidungen
+> und tatsächliche Grenzen stehen in [IMPLEMENTATION-DECISIONS.md](IMPLEMENTATION-DECISIONS.md).
+> Noch offene reale Tests bleiben in den Issues sichtbar.
+
+
 Stand: 29. Oktober 2026. Status: Planung, noch kein technischer Nachweis.
 
 GitHub-Übersicht: [Issue #1](https://github.com/Snadretto/SMS-Alert/issues/1).

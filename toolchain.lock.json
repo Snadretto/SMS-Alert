@@ -1,0 +1,16 @@
+{
+  "flutter": {
+    "version": "3.47.9",
+    "archive": "stable/linux/flutter_linux_3.47.9-stable.tar.xz",
+    "sha256": "25ed8c3c29d51a7353f2a944310b478af8214920639524b19c50a19e6c044c5a",
+    "base_url": "https://storage.googleapis.com/flutter_infra_release/releases"
+  },
+  "java": 17,
+  "gradle": "9.6.0",
+  "agp": "9.4.0",
+  "android_compile_sdk": 37,
+  "android_build_tools": "36.0.0",
+  "libphonenumber": "9.0.42",
+  "android_ndk": "28.2.13676358",
+  "cmake": "3.22.1"
+}
