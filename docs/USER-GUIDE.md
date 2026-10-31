@@ -1,4 +1,4 @@
-# SMS-Alert 0.1.1: Android-Testversion
+# SMS-Alert 0.2.0: Android-Testversion
 
 Diese Version ist für die ersten abgestimmten Gerätetests vorbereitet.
 Noch keine Kombination aus echtem Telefon, Mobilfunk und DND-Profil ist für den
@@ -7,7 +7,7 @@ SMS-Alarmunterstützung ausdrücklich an.
 
 ## Installation und Update
 
-1. Die signierte Datei `dist/sms-alert-0.1.1-test.apk` auf das Testtelefon kopieren.
+1. Die signierte Datei `dist/sms-alert-0.2.0-test.apk` auf das Testtelefon kopieren.
    Prüfsumme mit `dist/SHA256SUMS` vergleichen.
 2. Die Installation aus der dafür verwendeten Quelle erlauben und die APK öffnen.
    Die App ersetzt nicht die vorhandene SMS-App. Firmenrichtlinien können die
@@ -53,6 +53,32 @@ Beim Beenden stellt die App den vorherigen Wert nur wieder her, wenn er noch dem
 von ihr gesetzten Wert entspricht und seitdem kein Neustart stattfand.
 Zwischenzeitliche Nutzeränderungen werden respektiert. Das ist keine DND-Umgehung.
 
+## Vorhandene Klingeltöne auswählen
+
+Unter **Einstellungen → Klingelton vom Smartphone auswählen** öffnet sich die
+Android-Systemauswahl. Dort lassen sich die auf dem Telefon angebotenen
+Klingel-, Alarm- und Benachrichtigungstöne wählen. „Lautlos“ ist nicht vorgesehen.
+Die verfügbaren Kategorien und Namen hängen vom Hersteller ab.
+
+Nach der Auswahl wird der Name in der App angezeigt. Erst **Einstellungen speichern**
+übernimmt den Ton für die Alarmierung. Abbrechen der Systemauswahl behält die
+bisherige Auswahl; Verlassen der Einstellungen ohne Speichern ändert den aktiven
+Alarmton nicht. „Signal“ und „Puls“ bleiben jederzeit auswählbar.
+
+Der gewählte Ton wird mit höchstens 20 MB in den privaten App-Speicher kopiert.
+Es sind keine allgemeinen Medien-/Speicherrechte erforderlich. So hängt die
+spätere Alarmierung nicht von einer vorübergehenden Picker-Freigabe oder dem
+weiteren Bestehen der ursprünglichen Datei ab. Die Kopie ist wie die übrigen
+App-Daten von Backup/Transfer ausgeschlossen und wird bei Deinstallation gelöscht.
+Die App hält den gespeicherten Ton und höchstens eine weitere, noch nicht
+übernommene Auswahl; ungenutzte Kopien werden bei weiterer Auswahl/Start bereinigt.
+
+Die Wiederholung, Alarmlautstärke, Vibration und Quittierung laufen über denselben
+nativen Alarmdienst. Falls die gespeicherte Kopie beim Alarmstart nicht lesbar
+ist, verwendet er „Signal“ und zeigt einen Audiohinweis an. Bitte dann erneut
+auswählen. Ein danach bewusst gestarteter lokaler Testalarm prüft die tatsächliche
+Ausgabe; die Systemvorschau kann eine andere Lautstärke verwenden.
+
 ## SMS-Freigabe fehlt weiterhin
 
 Ein Ausrufezeichen bei **SMS empfangen** bedeutet, dass Android der App
@@ -65,7 +91,14 @@ bleiben sichtbar und werden nicht als erfolgreiche Freigabe behandelt.
 2. Erscheint kein Dialog oder bleibt das Ausrufezeichen, **App-Berechtigungen öffnen**
    wählen. In Android unter **Berechtigungen → SMS** prüfen und, falls verfügbar,
    den Zugriff erlauben. Nach Rückkehr aktualisiert sich die Anzeige.
-3. Ist SMS dort gesperrt oder fehlt eine freigebbare Auswahl, Modell,
+3. Meldet Android **„App wurde Zugriff verweigert“** oder eingeschränkte Einstellungen,
+   **Hilfe bei eingeschränkten Einstellungen** öffnen. Die Anleitung hebt das
+   **Dreipunkt-Menü ⋮** auf der Hauptseite der App-Info hervor. **App-Info öffnen**
+   führt direkt dorthin: **⋮ → Eingeschränkte Einstellungen zulassen**, falls nötig
+   bestätigen; danach **Berechtigungen → SMS → Zulassen**. Die Markierung befindet
+   sich in der Anleitung; fremde Hersteller-Systemseiten kann die App nicht
+   verlässlich überlagern oder markieren. Rechte ändert ausschließlich der Nutzer.
+4. Ist SMS danach weiterhin gesperrt oder fehlt eine freigebbare Auswahl, Modell,
    Android-Version und den genauen Systemtext festhalten. Mehrfach abgelehnte
    Anfragen, Installationsrestriktionen und Geräteverwaltung sind verschiedene
    Fälle. Die App kann Installations-/Administrationsrechte nicht selbst erteilen.

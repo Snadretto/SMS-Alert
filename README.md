@@ -4,10 +4,11 @@ Lokale SMS-Pikettalarmierung für Android: Passende Absender oder Textbestandtei
 starten einen anhaltenden Alarm mit Ton und Vibration bis zur Quittierung.
 Eine eigene App-Pause unterdrückt die Alarmierung bis zur manuellen Reaktivierung.
 
-Die **Android-Testversion 0.1.1** ist in Flutter mit nativer Kotlin-Anbindung
+Die **Android-Testversion 0.2.0** ist in Flutter mit nativer Kotlin-Anbindung
 implementiert. Sie bietet mehrere Regeln mit UND/ODER und SIM-Filter,
 Regelvorschau, Alarmwarteschlange, Einzel-/Gesamtquittierung, dauerhafte Pause,
-geführte Einrichtung, lokalen Selbsttest, zwei Alarmtöne und begrenzten Verlauf.
+geführte Einrichtung, lokalen Selbsttest, zwei mitgelieferte Alarmtöne, Auswahl vorhandener Smartphone-Klingeltöne und begrenzten Verlauf.
+Die Einrichtung bietet eine hervorgehobene Anleitung für eingeschränkte Android-Einstellungen.
 SMS-Empfang und Alarmdienst benötigen keine laufende Flutter-Oberfläche.
 Keine Konten, Backend, Tracking, Push oder eigenen Laufzeit-Netzwerkverbindungen;
 die signierte Test-Release-APK besitzt keine INTERNET-Berechtigung.

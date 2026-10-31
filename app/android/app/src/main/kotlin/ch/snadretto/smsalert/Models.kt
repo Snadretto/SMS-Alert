@@ -73,6 +73,16 @@ object SenderIdentity {
     }
 }
 
+data class DeviceTone(val id: String, val title: String, val uri: String) {
+    fun validate() {
+        if (!id.matches(Regex("[a-f0-9]{64}")) || title.isBlank() || title.length > 120 || uri.length > 2048 ||
+            try { java.net.URI(uri).scheme !in setOf("content", "android.resource") } catch (_: Exception) { true }) {
+            throw AppFailure("invalid_tone", "Ungültiger Smartphone-Klingelton. Bitte erneut auswählen.")
+        }
+    }
+    fun toMap(): Map<String, Any?> = mapOf("id" to id, "title" to title, "uri" to uri)
+}
+
 data class AlarmSettings(
     val enabled: Boolean = false,
     val country: String = "CH",
@@ -82,20 +92,24 @@ data class AlarmSettings(
     val raiseSystemVolume: Boolean = false,
     val retentionDays: Int = 30,
     val historyLimit: Int = 200,
+    val deviceTone: DeviceTone? = null,
 ) {
     fun validate() {
         if (!SenderIdentity.validCountry(country)) throw AppFailure("invalid_settings", "Unbekannter Ländercode.")
         if (volume !in 10..100) throw AppFailure("invalid_settings", "Alarmtonlautstärke muss zwischen 10 und 100 Prozent liegen.")
-        if (tone !in setOf("beacon", "pulse")) throw AppFailure("invalid_settings", "Unbekannter Alarmton.")
+        if (tone !in setOf("beacon", "pulse", "device")) throw AppFailure("invalid_settings", "Unbekannter Alarmton.")
+        deviceTone?.validate()
+        if (tone == "device" && deviceTone == null) throw AppFailure("invalid_tone", "Bitte zuerst einen Klingelton vom Smartphone auswählen.")
         if (retentionDays !in setOf(7, 30, 90) || historyLimit !in 50..1000) throw AppFailure("invalid_settings", "Ungültige Aufbewahrungsgrenze.")
     }
 
-    val audioKey: String get() = "$volume:$vibration:$tone:$raiseSystemVolume"
+    val audioKey: String get() = "$volume:$vibration:$tone:$raiseSystemVolume:${deviceTone?.id.orEmpty()}"
 
     fun toMap(): Map<String, Any?> = linkedMapOf(
         "enabled" to enabled, "country" to country, "volume" to volume, "vibration" to vibration,
         "tone" to tone, "raiseSystemVolume" to raiseSystemVolume,
         "retentionDays" to retentionDays, "historyLimit" to historyLimit,
+        "deviceTone" to deviceTone?.toMap(),
     )
 }
 

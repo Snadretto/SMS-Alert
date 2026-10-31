@@ -58,4 +58,13 @@ class ModelsTest {
         assertNotEquals(fp,TransportIdentity.fingerprint(ByteArray(32){2},sms))
         assertEquals(64,fp.length)
     }
+    @Test fun deviceToneRequiresLocalSelectionAndSafeAssetIdentifier() {
+        val selected = DeviceTone("a".repeat(64), "Telefon-Ton", "content://media/internal/audio/media/5")
+        AlarmSettings(tone="device", deviceTone=selected).validate()
+        assertThrows(AppFailure::class.java) { AlarmSettings(tone="device").validate() }
+        assertThrows(AppFailure::class.java) { selected.copy(id="../../secret").validate() }
+        assertThrows(AppFailure::class.java) { selected.copy(uri="https://example.org/sound").validate() }
+        assertThrows(AppFailure::class.java) { selected.copy(title="").validate() }
+        assertNotEquals(AlarmSettings(tone="device", deviceTone=selected).audioKey, AlarmSettings(tone="device", deviceTone=selected.copy(id="b".repeat(64))).audioKey)
+    }
 }

@@ -70,6 +70,18 @@ class AlarmRule {
 }
 
 @immutable
+class DeviceTone {
+  const DeviceTone({required this.id, required this.title, required this.uri});
+  final String id, title, uri;
+  factory DeviceTone.fromMap(Map<String, Object?> map) => DeviceTone(
+    id: map['id']! as String,
+    title: map['title']! as String,
+    uri: map['uri']! as String,
+  );
+  Map<String, Object?> toMap() => {'id': id, 'title': title, 'uri': uri};
+}
+
+@immutable
 class AlarmSettings {
   const AlarmSettings({
     this.enabled = false,
@@ -80,10 +92,12 @@ class AlarmSettings {
     this.raiseSystemVolume = false,
     this.retentionDays = 30,
     this.historyLimit = 200,
+    this.deviceTone,
   });
   final bool enabled, vibration, raiseSystemVolume;
   final String country, tone;
   final int volume, retentionDays, historyLimit;
+  final DeviceTone? deviceTone;
   factory AlarmSettings.fromMap(Map<String, Object?> map) => AlarmSettings(
     enabled: map['enabled']! as bool,
     country: map['country']! as String,
@@ -93,6 +107,9 @@ class AlarmSettings {
     raiseSystemVolume: map['raiseSystemVolume']! as bool,
     retentionDays: map['retentionDays']! as int,
     historyLimit: map['historyLimit']! as int,
+    deviceTone: map['deviceTone'] == null
+        ? null
+        : DeviceTone.fromMap(objectMap(map['deviceTone'])),
   );
   Map<String, Object?> toMap() => {
     'country': country,
@@ -102,6 +119,7 @@ class AlarmSettings {
     'raiseSystemVolume': raiseSystemVolume,
     'retentionDays': retentionDays,
     'historyLimit': historyLimit,
+    'deviceTone': deviceTone?.toMap(),
   };
   AlarmSettings copyWith({
     String? country,
@@ -111,6 +129,7 @@ class AlarmSettings {
     bool? raiseSystemVolume,
     int? retentionDays,
     int? historyLimit,
+    DeviceTone? deviceTone,
   }) => AlarmSettings(
     enabled: enabled,
     country: country ?? this.country,
@@ -120,6 +139,7 @@ class AlarmSettings {
     raiseSystemVolume: raiseSystemVolume ?? this.raiseSystemVolume,
     retentionDays: retentionDays ?? this.retentionDays,
     historyLimit: historyLimit ?? this.historyLimit,
+    deviceTone: deviceTone ?? this.deviceTone,
   );
 }
 
@@ -229,7 +249,7 @@ class AppSnapshot {
       'SMS empfangen',
       flag('smsPermission')
           ? 'SMS-Empfang ist freigegeben. Kein Zugriff auf das Postfach oder Kontakte.'
-          : 'SMS-Empfang ist noch nicht freigegeben. Falls kein Dialog erscheint: App-Berechtigungen öffnen und „Berechtigungen → SMS“ prüfen. Ist die Auswahl gesperrt, kann Android den Installationsweg oder eine Geräterichtlinie einschränken.',
+          : 'SMS-Empfang ist noch nicht freigegeben. Meldet Android „App wurde Zugriff verweigert“ oder „eingeschränkte Einstellungen“, öffne die hervorgehobene Hilfe unter dieser Karte.',
       flag('smsPermission'),
       'smsPermission',
     ),

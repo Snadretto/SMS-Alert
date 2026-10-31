@@ -3,9 +3,11 @@ package ch.snadretto.smsalert
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.media.RingtoneManager
 import android.os.Build
 import android.os.SystemClock
 import android.provider.Settings
@@ -17,6 +19,7 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     private var permissionResult: MethodChannel.Result? = null
+    private var toneResult: MethodChannel.Result? = null
     private var requestedPermissions = emptyList<String>()
     private var streamListener: (() -> Unit)? = null
     private var methods: MethodChannel? = null
@@ -30,6 +33,7 @@ class MainActivity : FlutterActivity() {
                 val store = AppRuntime.store(this)
                 store.maintain()
                 if (!AlarmService.running) AlarmAudio.restoreVolume(this, store)
+                ToneAssets.prune(applicationContext)
             } catch (_: RuntimeException) { /* The channel reports storage failures to the UI. */ }
         }
         methods = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "ch.snadretto.smsalert/methods_v1").also { it.setMethodCallHandler(::handleMethod) }
@@ -51,6 +55,10 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun handleMethod(call: MethodCall, result: MethodChannel.Result) {
+        if (call.method == "pickDeviceTone") {
+            pickDeviceTone(call.arguments as? Map<*, *>, result)
+            return
+        }
         if (call.method in setOf("requestCorePermissions", "requestSmsPermission")) {
             requestRuntimePermissions(call.method, result)
             return
@@ -70,7 +78,7 @@ class MainActivity : FlutterActivity() {
                     "saveRule" -> store.saveRule(store.ruleFromArguments(args))
                     "deleteRule" -> store.deleteRule(args.string("id", ""))
                     "setEnabled" -> { store.setEnabled(args.boolean("enabled", false)); AppRuntime.reconcile(this) }
-                    "updateSettings" -> { store.updateSettings(args); AppRuntime.reconcile(this) }
+                    "updateSettings" -> { store.updateSettings(args); ToneAssets.prune(applicationContext); AppRuntime.reconcile(this) }
                     "previewRule" -> {
                         val ruleArgs = args["rule"] as? Map<*, *> ?: throw AppFailure("invalid_argument", "Regel fehlt.")
                         val rule = store.ruleFromArguments(ruleArgs)
@@ -99,8 +107,51 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+    private fun pickDeviceTone(args: Map<*, *>?, result: MethodChannel.Result) {
+        if (toneResult != null || permissionResult != null) { result.error("busy", "Eine Systemauswahl ist bereits offen.", null); return }
+        try {
+            val existing = args?.string("existingUri", "").orEmpty()
+            val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
+                putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL)
+                putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, false)
+                putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false)
+                putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Alarmton auswählen")
+                if (existing.startsWith("content://") || existing.startsWith("android.resource://")) {
+                    putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, Uri.parse(existing))
+                }
+            }
+            val handler = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY or PackageManager.MATCH_SYSTEM_ONLY)
+                ?: throw AppFailure("tone_picker_unavailable", "Dieses Gerät stellt keine Android-Klingeltonauswahl bereit. Signal und Puls bleiben verfügbar.")
+            intent.component = ComponentName(handler.activityInfo.packageName, handler.activityInfo.name)
+            toneResult = result
+            @Suppress("DEPRECATION")
+            startActivityForResult(intent, 72)
+        } catch (failure: AppFailure) { toneResult = null; result.error(failure.code, failure.message, null) }
+        catch (_: RuntimeException) { toneResult = null; result.error("tone_picker_unavailable", "Die Klingeltonauswahl konnte nicht geöffnet werden. Signal und Puls bleiben verfügbar.", null) }
+    }
+
+    @Deprecated("Android activity-result bridge for FlutterActivity")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != 72) return
+        val pending = toneResult ?: return
+        if (resultCode != RESULT_OK) { toneResult = null; pending.success(null); return }
+        val uri = if (Build.VERSION.SDK_INT >= 33) data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI, Uri::class.java)
+            else { @Suppress("DEPRECATION") data?.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI) }
+        if (uri == null) { toneResult = null; pending.error("invalid_tone", "Bitte einen hörbaren Klingelton auswählen; Lautlos ist kein Alarmton.", null); return }
+        val app = applicationContext
+        ToneAssets.io.execute {
+            try {
+                val selected = ToneAssets.import(app, uri)
+                AppRuntime.main.post { if (toneResult === pending) { toneResult = null; pending.success(selected.toMap()) } }
+            } catch (failure: AppFailure) {
+                AppRuntime.main.post { if (toneResult === pending) { toneResult = null; pending.error(failure.code, failure.message, null) } }
+            }
+        }
+    }
+
     private fun requestRuntimePermissions(method: String, result: MethodChannel.Result) {
-        if (permissionResult != null) { result.error("busy", "Eine Berechtigungsanfrage ist bereits offen.", null); return }
+        if (permissionResult != null || toneResult != null) { result.error("busy", "Eine Systemanfrage ist bereits offen.", null); return }
         val permissions = mutableListOf(Manifest.permission.RECEIVE_SMS)
         if (method == "requestCorePermissions" && Build.VERSION.SDK_INT >= 33) permissions += Manifest.permission.POST_NOTIFICATIONS
         val missing = permissions.filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
@@ -142,7 +193,7 @@ class MainActivity : FlutterActivity() {
             // The callback may be empty or automatically denied. Read the effective grants.
             when {
                 Manifest.permission.RECEIVE_SMS in requested && checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED ->
-                    pendingResult?.error("sms_permission_denied", "SMS-Zugriff wurde nicht freigegeben. Öffne unter Einrichtung die App-Berechtigungen und prüfe dort Berechtigungen → SMS. Ist SMS dort gesperrt, muss der Installationsweg oder eine Geräterichtlinie geprüft werden.", null)
+                    pendingResult?.error("sms_permission_denied", "SMS-Zugriff wurde nicht freigegeben. Bei eingeschränkten Einstellungen öffne unter Einrichtung die hervorgehobene Hilfe: App-Info → ⋮ → Eingeschränkte Einstellungen zulassen, danach Berechtigungen → SMS.", null)
                 Build.VERSION.SDK_INT >= 33 && Manifest.permission.POST_NOTIFICATIONS in requested && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED ->
                     pendingResult?.error("notifications_permission_denied", "Benachrichtigungen wurden nicht freigegeben. Bitte unter Einrichtung die Alarmbenachrichtigungen öffnen und erlauben.", null)
                 else -> pendingResult?.success(null)
@@ -156,6 +207,7 @@ class MainActivity : FlutterActivity() {
         streamListener?.let { AppRuntime.listeners.remove(it) }; streamListener = null
         methods?.setMethodCallHandler(null); events?.setStreamHandler(null)
         permissionResult?.error("cancelled", "Berechtigungsanfrage wurde beendet.", null); permissionResult = null; requestedPermissions = emptyList()
+        toneResult?.error("cancelled", "Klingeltonauswahl wurde beendet.", null); toneResult = null
         super.cleanUpFlutterEngine(flutterEngine)
     }
 }

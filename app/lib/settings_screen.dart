@@ -1,5 +1,6 @@
 // Copyright 2026 Snadretto. SPDX-License-Identifier: Apache-2.0
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'models.dart';
 import 'platform_gateway.dart';
@@ -14,6 +15,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   late AlarmSettings settings;
   bool saving = false;
+  bool picking = false;
   @override
   void initState() {
     super.initState();
@@ -39,6 +41,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       );
+    }
+  }
+
+  Future<void> pickTone() async {
+    setState(() => picking = true);
+    try {
+      final selected = await widget.controller.gateway.pickDeviceTone(
+        settings.deviceTone?.uri,
+      );
+      if (mounted && selected != null) {
+        setState(
+          () => settings = settings.copyWith(
+            tone: 'device',
+            deviceTone: selected,
+          ),
+        );
+      }
+    } on PlatformException catch (failure) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              failure.message ?? 'Klingelton konnte nicht übernommen werden.',
+            ),
+          ),
+        );
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Klingeltonauswahl ist auf diesem Gerät nicht verfügbar.',
+            ),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => picking = false);
     }
   }
 
@@ -72,14 +113,50 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const SizedBox(height: 20),
             DropdownButtonFormField<String>(
+              key: ValueKey('${settings.tone}:${settings.deviceTone?.id}'),
               initialValue: settings.tone,
               decoration: const InputDecoration(labelText: 'Alarmton'),
-              items: const [
-                DropdownMenuItem(value: 'beacon', child: Text('Signal')),
-                DropdownMenuItem(value: 'pulse', child: Text('Puls')),
+              isExpanded: true,
+              items: [
+                const DropdownMenuItem(value: 'beacon', child: Text('Signal')),
+                const DropdownMenuItem(value: 'pulse', child: Text('Puls')),
+                if (settings.deviceTone != null)
+                  DropdownMenuItem(
+                    value: 'device',
+                    child: Text(
+                      settings.deviceTone!.title,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
               ],
-              onChanged: (value) =>
-                  setState(() => settings = settings.copyWith(tone: value)),
+              onChanged: picking || saving
+                  ? null
+                  : (value) => setState(
+                      () => settings = settings.copyWith(tone: value),
+                    ),
+            ),
+            const SizedBox(height: 12),
+            Semantics(
+              identifier: 'pick_device_tone',
+              child: OutlinedButton.icon(
+                onPressed: picking || saving || widget.controller.busy
+                    ? null
+                    : pickTone,
+                icon: const Icon(Icons.library_music_outlined),
+                label: Text(
+                  picking
+                      ? 'Klingelton wird übernommen …'
+                      : 'Klingelton vom Smartphone auswählen',
+                ),
+              ),
+            ),
+            if (settings.tone == 'device') ...[
+              const SizedBox(height: 8),
+              Text('Ausgewählt: ${settings.deviceTone!.title}'),
+            ],
+            const SizedBox(height: 8),
+            const Text(
+              'Die Auswahl wird mit „Einstellungen speichern“ übernommen. Der Ton wird lokal in der App gespeichert und bei einem Alarm wiederholt. Danach den lokalen Testalarm ausprobieren.',
             ),
             const SizedBox(height: 20),
             Text('Alarmtonlautstärke: ${settings.volume} %'),
@@ -185,7 +262,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const SizedBox(height: 24),
             FilledButton.icon(
-              onPressed: saving ? null : save,
+              onPressed: saving || picking ? null : save,
               icon: const Icon(Icons.check),
               label: const Text('Einstellungen speichern'),
             ),
@@ -196,14 +273,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const SizedBox(height: 12),
             const Text(
-              'Version 0.1.1 · Android-Testversion\n\nIdee, Konzeption und Design: Snadretto.\nProgrammcode mit GPT-6.1 Sol generiert.\n\nKeine eigenen Netzwerkverbindungen, kein Konto, kein Backend, keine Telemetrie. Die SMS-Zustellung erfolgt durch Android und das Mobilfunknetz.\n\nEine Quittierung wird nicht an einen Arbeitgeber oder eine Leitstelle gesendet. Nach Neustart zuerst entsperren; nach manuellem App-Stopp einmal öffnen.',
+              'Version 0.2.0 · Android-Testversion\n\nIdee, Konzeption und Design: Snadretto.\nProgrammcode mit GPT-6.1 Sol generiert.\n\nKeine eigenen Netzwerkverbindungen, kein Konto, kein Backend, keine Telemetrie. Die SMS-Zustellung erfolgt durch Android und das Mobilfunknetz.\n\nEine Quittierung wird nicht an einen Arbeitgeber oder eine Leitstelle gesendet. Nach Neustart zuerst entsperren; nach manuellem App-Stopp einmal öffnen.',
             ),
             const SizedBox(height: 12),
             TextButton.icon(
               onPressed: () => showLicensePage(
                 context: context,
                 applicationName: 'SMS-Alert',
-                applicationVersion: '0.1.1',
+                applicationVersion: '0.2.0',
                 applicationLegalese: 'Copyright 2026 Snadretto',
               ),
               icon: const Icon(Icons.description_outlined),

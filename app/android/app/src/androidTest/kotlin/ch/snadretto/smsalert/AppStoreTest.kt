@@ -85,4 +85,17 @@ class AppStoreTest {
         context.openOrCreateDatabase(name,0,null).use{db->db.execSQL("DROP TABLE seen");db.version=1}
         store=AppStore(context,name);assertFalse(store.settings().enabled);assertEquals(1,store.history().size)
     }
+    @Test fun localDeviceTonePersistsWithoutChangingPauseAndMissingAssetsAreRejected(){
+        val selected=ToneAssets.import(context,android.net.Uri.parse("android.resource://${context.packageName}/${R.raw.beacon}"))
+        try {
+            assertTrue(ToneAssets.file(context,selected.id).length()>0)
+            store.updateSettings(mapOf("tone" to "device","deviceTone" to selected.toMap()))
+            store.close();store=AppStore(context,name)
+            assertFalse(store.settings().enabled);assertEquals(selected,store.settings().deviceTone)
+            ToneAssets.file(context,selected.id).delete()
+            assertThrows(AppFailure::class.java){store.updateSettings(mapOf("volume" to 25))}
+            assertEquals(80,store.settings().volume)
+            store.updateSettings(mapOf("tone" to "pulse"));assertEquals("pulse",store.settings().tone)
+        } finally { ToneAssets.file(context,selected.id).delete() }
+    }
 }

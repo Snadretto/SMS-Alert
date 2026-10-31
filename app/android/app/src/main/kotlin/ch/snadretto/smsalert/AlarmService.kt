@@ -110,21 +110,20 @@ class AlarmService : Service() {
             } catch (_: RuntimeException) { store.setMeta("audioWarning", "vibration_failed") }
         }
         try {
-            val media = MediaPlayer()
+            val media = if (settings.tone == "device") {
+                try { preparedPlayer(settings, useDevice = true) }
+                catch (_: Exception) {
+                    store.setMeta("audioWarning", "device_tone_fallback")
+                    preparedPlayer(settings.copy(tone = "beacon"), useDevice = false)
+                }
+            } else preparedPlayer(settings, useDevice = false)
             player = media
-            media.setAudioAttributes(attributes)
-            media.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK)
-            resources.openRawResourceFd(if (settings.tone == "pulse") R.raw.pulse else R.raw.beacon).use { fd -> media.setDataSource(fd.fileDescriptor, fd.startOffset, fd.declaredLength) }
-            media.isLooping = true
-            val gain = settings.volume / 100f
-            media.setVolume(gain, gain)
             media.setOnErrorListener { failed, _, _ ->
                 if (player === failed) { player = null; audioStarted = false }
                 failed.release()
                 outcome("audio_failed")
                 true
             }
-            media.prepare()
             val request = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
                 .setAudioAttributes(attributes).setAcceptsDelayedFocusGain(false)
                 .setOnAudioFocusChangeListener({ change ->
@@ -144,6 +143,26 @@ class AlarmService : Service() {
         }
         AppRuntime.publish()
         return START_STICKY
+    }
+
+    private fun preparedPlayer(settings: AlarmSettings, useDevice: Boolean): MediaPlayer {
+        val media = MediaPlayer()
+        try {
+            media.setAudioAttributes(attributes)
+            media.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK)
+            if (useDevice) {
+                val selected = settings.deviceTone ?: throw AppFailure("tone_unavailable", "Smartphone-Klingelton fehlt.")
+                ToneAssets.requireAvailable(this, selected)
+                java.io.FileInputStream(ToneAssets.file(this, selected.id)).use { media.setDataSource(it.fd) }
+            } else {
+                resources.openRawResourceFd(if (settings.tone == "pulse") R.raw.pulse else R.raw.beacon).use { media.setDataSource(it.fileDescriptor, it.startOffset, it.declaredLength) }
+            }
+            media.isLooping = true
+            val gain = settings.volume / 100f
+            media.setVolume(gain, gain)
+            media.prepare()
+            return media
+        } catch (failure: Exception) { media.release(); throw failure }
     }
 
     private fun startAudio() {

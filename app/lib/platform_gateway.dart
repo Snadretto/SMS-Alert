@@ -10,6 +10,7 @@ abstract interface class AlarmGateway {
   Future<AppSnapshot> snapshot();
   Stream<AppSnapshot> get changes;
   Future<void> command(String method, [Map<String, Object?>? arguments]);
+  Future<DeviceTone?> pickDeviceTone(String? existingUri);
   Future<bool> preview(
     AlarmRule rule,
     String sender,
@@ -33,6 +34,14 @@ class AndroidGateway implements AlarmGateway {
   Future<void> command(String method, [Map<String, Object?>? arguments]) =>
       _methods.invokeMethod<void>(method, arguments);
   @override
+  Future<DeviceTone?> pickDeviceTone(String? existingUri) async {
+    final result = await _methods.invokeMethod<Object?>('pickDeviceTone', {
+      'existingUri': existingUri ?? '',
+    });
+    return result == null ? null : DeviceTone.fromMap(objectMap(result));
+  }
+
+  @override
   Future<bool> preview(
     AlarmRule rule,
     String sender,
@@ -49,6 +58,9 @@ class AndroidGateway implements AlarmGateway {
 }
 
 class UnsupportedGateway implements AlarmGateway {
+  @override
+  Future<DeviceTone?> pickDeviceTone(String? existingUri) async =>
+      throw UnsupportedError('Klingeltonauswahl nicht verfügbar.');
   @override
   Future<AppSnapshot> snapshot() async => const AppSnapshot(supported: false);
   @override

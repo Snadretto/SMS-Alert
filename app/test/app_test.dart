@@ -14,6 +14,15 @@ class FakeGateway implements AlarmGateway {
   final calls = <(String, Map<String, Object?>?)>[];
   final updates = StreamController<AppSnapshot>.broadcast();
   Object? failure;
+  DeviceTone? pickedTone;
+  String? pickerExistingUri;
+  @override
+  Future<DeviceTone?> pickDeviceTone(String? existingUri) async {
+    pickerExistingUri = existingUri;
+    if (failure case final Object error) throw error;
+    return pickedTone;
+  }
+
   @override
   Future<AppSnapshot> snapshot() async => value;
   @override
@@ -258,6 +267,75 @@ void main() {
     expect(gateway.calls.single.$1, 'saveRule');
     expect(gateway.calls.single.$2!['text'], 'ALARM');
   });
+  testWidgets(
+    'device tone selection is saved explicitly and cancellation keeps draft',
+    (tester) async {
+      const tone = DeviceTone(
+        id: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        title: 'Mein Klingelton',
+        uri: 'content://media/internal/audio/media/5',
+      );
+      final gateway = FakeGateway(state())..pickedTone = tone;
+      await tester.pumpWidget(SmsAlertApp(gateway: gateway));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Einstellungen'));
+      await tester.pumpAndSettle();
+      final pick = find.text('Klingelton vom Smartphone auswählen');
+      await tester.ensureVisible(pick);
+      await tester.tap(pick);
+      await tester.pumpAndSettle();
+      expect(find.text('Ausgewählt: Mein Klingelton'), findsOneWidget);
+      expect(gateway.calls, isEmpty);
+      gateway.pickedTone = null;
+      await tester.tap(pick);
+      await tester.pumpAndSettle();
+      expect(gateway.pickerExistingUri, tone.uri);
+      expect(find.text('Ausgewählt: Mein Klingelton'), findsOneWidget);
+      final save = find.text('Einstellungen speichern');
+      await tester.scrollUntilVisible(
+        save,
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(save);
+      await tester.pumpAndSettle();
+      expect(gateway.calls.single.$1, 'updateSettings');
+      expect(gateway.calls.single.$2!['tone'], 'device');
+      expect(gateway.calls.single.$2!['deviceTone'], tone.toMap());
+    },
+  );
+  testWidgets(
+    'restricted-settings help highlights the app menu and opens only app info',
+    (tester) async {
+      final base = state();
+      final gateway = FakeGateway(
+        AppSnapshot(
+          supported: true,
+          rules: base.rules,
+          diagnostics: {...base.diagnostics, 'smsPermission': false},
+        ),
+      );
+      await tester.pumpWidget(SmsAlertApp(gateway: gateway));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Einrichtung'));
+      await tester.pumpAndSettle();
+      final help = find.text('Hilfe bei eingeschränkten Einstellungen');
+      await tester.ensureVisible(help);
+      await tester.tap(help);
+      await tester.pumpAndSettle();
+      expect(find.text('Oben rechts ⋮ öffnen'), findsNothing);
+      expect(find.text('1. Oben rechts ⋮ öffnen'), findsOneWidget);
+      expect(gateway.calls, isEmpty);
+      final open = find.text('App-Info öffnen');
+      await tester.ensureVisible(open);
+      await tester.tap(open);
+      await tester.pumpAndSettle();
+      expect(gateway.calls.single.$1, 'openSettings');
+      expect(gateway.calls.single.$2, {'kind': 'app'});
+      expect(gateway.value.flag('smsPermission'), isFalse);
+    },
+  );
   testWidgets('small screen with large text can scroll without overflowing', (
     tester,
   ) async {

@@ -13,6 +13,7 @@ import java.util.Locale
 import java.util.UUID
 
 class AppStore(context: Context, name: String = "alerts.db", private val changed: () -> Unit = {}) : SQLiteOpenHelper(context, name, null, 2) {
+    private val appContext = context.applicationContext
     companion object { private val lock = Any() }
 
     override fun onConfigure(db: SQLiteDatabase) { db.setForeignKeyConstraintsEnabled(true) }
@@ -55,6 +56,7 @@ class AppStore(context: Context, name: String = "alerts.db", private val changed
         volume = j.optInt("volume", 80), vibration = j.optBoolean("vibration", true),
         tone = j.optString("tone", "beacon"), raiseSystemVolume = j.optBoolean("raiseSystemVolume", false),
         retentionDays = j.optInt("retentionDays", 30), historyLimit = j.optInt("historyLimit", 200),
+        deviceTone = j.optJSONObject("deviceTone")?.let { DeviceTone(it.getString("id"), it.getString("title"), it.getString("uri")) },
     ).also { it.validate() }
 
     private fun writeSettings(db: SQLiteDatabase, settings: AlarmSettings) {
@@ -69,7 +71,13 @@ class AppStore(context: Context, name: String = "alerts.db", private val changed
             volume = args.integer("volume", current.volume), vibration = args.boolean("vibration", current.vibration),
             tone = args.string("tone", current.tone), raiseSystemVolume = args.boolean("raiseSystemVolume", current.raiseSystemVolume),
             retentionDays = args.integer("retentionDays", current.retentionDays), historyLimit = args.integer("historyLimit", current.historyLimit),
+            deviceTone = if (!args.containsKey("deviceTone")) current.deviceTone else args["deviceTone"]?.let {
+                val selected = it as? Map<*, *> ?: throw AppFailure("invalid_tone", "Ungültige Klingeltonauswahl.")
+                DeviceTone(selected.string("id", ""), selected.string("title", ""), selected.string("uri", ""))
+            },
         )
+        next.validate()
+        if (next.tone == "device") ToneAssets.requireAvailable(appContext, next.deviceTone!!)
         writeSettings(db, next)
         prune(db, next)
     }

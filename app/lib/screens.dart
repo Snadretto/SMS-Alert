@@ -5,6 +5,7 @@ import 'models.dart';
 import 'platform_gateway.dart';
 import 'rule_editor.dart';
 import 'settings_screen.dart';
+import 'restricted_settings_help.dart';
 
 String eventTime(BuildContext context, int milliseconds) {
   final date = DateTime.fromMillisecondsSinceEpoch(milliseconds);
@@ -675,6 +676,23 @@ class _AppShellState extends State<AppShell> {
                 ),
               ),
               if (check.action == 'smsPermission' && !check.ok)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: Semantics(
+                    identifier: 'restricted_settings_help',
+                    child: FilledButton.tonalIcon(
+                      onPressed: controller.busy
+                          ? null
+                          : () =>
+                                showRestrictedSettingsHelp(context, controller),
+                      icon: const Icon(Icons.help_outline),
+                      label: const Text(
+                        'Hilfe bei eingeschränkten Einstellungen',
+                      ),
+                    ),
+                  ),
+                ),
+              if (check.action == 'smsPermission' && !check.ok)
                 TextButton.icon(
                   onPressed: controller.busy
                       ? null
@@ -728,6 +746,7 @@ class _AppShellState extends State<AppShell> {
               'volume_changed_by_user' => 'Zwischenzeitlich geänderte Systemlautstärke wurde respektiert.',
               'fixed_volume' => 'Das Gerät verwendet eine feste Lautstärke.',
               'vibration_failed' => 'Vibration konnte nicht gestartet werden.',
+              'device_tone_fallback' => 'Der gespeicherte Smartphone-Klingelton konnte nicht geöffnet werden. Stattdessen wird der mitgelieferte Ton „Signal“ verwendet. Bitte Klingelton erneut auswählen.',
               _ => 'Systemlautstärke konnte nicht wie gewünscht geändert oder wiederhergestellt werden.',
             }),
           ),
