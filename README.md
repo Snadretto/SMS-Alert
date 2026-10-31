@@ -24,7 +24,7 @@ Flutter-Adapter meldet dies ausdrücklich.
 
 - [Installation, Einrichtung und Bedienung](docs/USER-GUIDE.md)
 - [Build, Signierung und Prüfungen](docs/BUILD.md)
-- [Automatisierte Nachweise und offene Geräteabnahme](docs/testing/MVP-REPORT.md)
+- [Aktuelle Nachweise und Geräte-Testgrenzen](docs/testing/RINGTONES-0.2.0.md)
 - [Produkt- und Plattformentscheidungen](docs/IMPLEMENTATION-DECISIONS.md)
 - [Plan](docs/PLAN.md), [Issue-Übersicht](docs/ISSUES.md), [GitHub-Issues](https://github.com/Snadretto/SMS-Alert/issues)
 

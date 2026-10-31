@@ -39,7 +39,8 @@ P0: frühe Machbarkeits-/Vertriebsentscheidung. P1: MVP, Härtung oder gesondert
 ## Status der Arbeitspakete
 
 Abgeschlossen: #3 (APK-Vertriebsentscheid), #4 (begründeter iOS-No-Go),
-#5 (Flutter-/Build-Grundlage), #6 (Regeln und Persistenz).
+#5 (Flutter-/Build-Grundlage), #6 (Regeln und Persistenz), #9 (Einrichtung;
+OPPO-Basisalarmierung inzwischen durch Anwender bestätigt).
 Die Implementierung der übrigen Pakete ist ebenfalls vorhanden. #2, #7, #8,
 #10, #11, #12, #13 und #14 bleiben für die in ihren Abnahmekriterien geforderten
 realen Geräte-, Mobilfunk-, Audio-/DND-/OEM-/Backup- und Pilotprüfungen offen.
@@ -50,3 +51,13 @@ Update 0.1.1: #9 ist wegen des Anwenderberichts zur fehlenden SMS-Freigabe wiede
 geöffnet. Effektive Freigaben werden geprüft, Ablehnungen erklärt und
 App-Berechtigungen direkt angeboten. [Dialogtests und Grenzen](testing/PERMISSIONS-0.1.1.md)
 sind dokumentiert; die Bestätigung auf dem konkreten Anwendertelefon steht aus.
+
+Update 0.2.0 (31.10.2026): Smartphone-Klingeltöne und hervorgehobene Anleitung
+für eingeschränkte Einstellungen sind umgesetzt. [Nachweise](testing/RINGTONES-0.2.0.md).
+Der [OPPO-Anwenderbericht](testing/OPPO-Find-X9-user-2026-10-31.md) bestätigt die
+Basisalarmierung mit einem extern ausgelösten Testalarm aus dem Produktivsystem;
+die übrige Gerätematrix bleibt offen.
+
+#9 ist mit dem Anwenderbericht und der ergänzten Anleitung wieder abgeschlossen.
+Die neue Smartphone-Klingeltonauswahl muss auf dem OPPO noch ausprobiert werden;
+die übrigen realen Audio-/OEM-/SIM-Abnahmekriterien in #8/#13 bleiben offen.

@@ -1,0 +1,47 @@
+{
+  "timestamp_utc": "2026-10-31T19:18:12.134784+00:00",
+  "apk_sha256": "ee5e148af3121242a50d172dc4499e9cbab35bf98d3bf8b3bd6d3cf3f23949eb",
+  "platform_api": "31",
+  "scope": "AOSP emulator, real system picker, private audio copy, synthetic SMS, no host audio/physical audibility proof. Root reads app state and deletes only its selected tone for fault injection. Permission grants are test setup, not performed by app/help.",
+  "results": [
+    {
+      "case": "highlighted_restricted_help_opens_app_info_without_grant",
+      "status": "PASS"
+    },
+    {
+      "case": "real_system_picker_stages_choice_until_save",
+      "status": "PASS",
+      "selected_label": "Adara"
+    },
+    {
+      "case": "cancel_picker_keeps_previous_draft",
+      "status": "PASS"
+    },
+    {
+      "case": "selected_audio_copied_privately_and_saved_without_activating",
+      "status": "PASS",
+      "bytes": 10414,
+      "title": "Adara"
+    },
+    {
+      "case": "leaving_settings_without_save_preserves_active_choice",
+      "status": "PASS"
+    },
+    {
+      "case": "local_alarm_uses_saved_device_audio_and_stops",
+      "status": "PASS"
+    },
+    {
+      "case": "cold_sms_plays_private_device_tone_without_picker_grant",
+      "status": "PASS"
+    },
+    {
+      "case": "missing_saved_audio_falls_back_to_signal",
+      "status": "PASS"
+    },
+    {
+      "case": "pause_stops_signals_after_device_tone_use",
+      "status": "PASS"
+    }
+  ]
+}
