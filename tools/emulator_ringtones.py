@@ -56,11 +56,11 @@ def foreground():return 'isForeground=true' in adb('shell','dumpsys','activity',
 def playing():return db()['meta'].get('lastOutcome')=='playback_started' and foreground()
 def sms_permission():return re.search(r'android\.permission\.RECEIVE_SMS: granted=true',adb('shell','dumpsys','package',P)) is not None
 def record(case,**details):results.append({'case':case,'status':'PASS',**details});print('PASS: '+case,flush=True)
-def pick():
+def pick(index=0):
  button('Klingelton vom Smartphone auswählen',top=True)
  choices=[n for n in nodes() if n.attrib.get('class')=='android.widget.CheckedTextView' and label(n) and not label(n).lower().startswith(('default','silent','none'))]
  assert choices,'No system sound rows'
- chosen=label(choices[0]);tap(choices[0]);button('OK');wait(lambda:bool([n for n in nodes() if label(n).startswith('Ausgewählt: ')]))
+ chosen=label(choices[index]);tap(choices[index]);button('OK');wait(lambda:bool([n for n in nodes() if label(n).startswith('Ausgewählt: ')]))
  return chosen
 try:
  assert adb('shell','getprop','ro.kernel.qemu')=='1' and adb('shell','id','-u')=='0'
@@ -86,7 +86,7 @@ try:
  raw=adb('exec-out','cat',private,binary=True);assert hashlib.sha256(raw).hexdigest()==selected['id']
  record('selected_audio_copied_privately_and_saved_without_activating',bytes=len(raw),title=selected['title'])
  # Cancel the editor after choosing a different draft: the saved selection must stay unchanged.
- button('Einstellungen');pick();adb('shell','input','keyevent','KEYCODE_BACK');assert db()['settings']['deviceTone']==selected
+ button('Einstellungen');pick(1);adb('shell','input','keyevent','KEYCODE_BACK');assert db()['settings']['deviceTone']==selected
  record('leaving_settings_without_save_preserves_active_choice')
  button('Alarmierung aktivieren',top=True);wait(lambda:db()['settings']['enabled']);button('Testalarm starten');wait(playing)
  assert not db()['meta'].get('audioWarning');button('Diesen Alarm quittieren',top=True);wait(lambda:db()['pending']==0);wait(lambda:not foreground());record('local_alarm_uses_saved_device_audio_and_stops')

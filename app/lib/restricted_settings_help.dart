@@ -12,7 +12,12 @@ Future<void> showRestrictedSettingsHelp(
   useSafeArea: true,
   showDragHandle: true,
   builder: (sheetContext) => SingleChildScrollView(
-    padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
+    padding: EdgeInsets.fromLTRB(
+      24,
+      8,
+      24,
+      32 + MediaQuery.viewPaddingOf(sheetContext).bottom,
+    ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

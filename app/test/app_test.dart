@@ -308,6 +308,16 @@ void main() {
   testWidgets(
     'restricted-settings help highlights the app menu and opens only app info',
     (tester) async {
+      tester.view.physicalSize = const Size(400, 800);
+      tester.view.devicePixelRatio = 1;
+      tester.view.viewPadding = const FakeViewPadding(bottom: 48);
+      tester.view.padding = const FakeViewPadding(bottom: 48);
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+        tester.view.resetViewPadding();
+        tester.view.resetPadding();
+      });
       final base = state();
       final gateway = FakeGateway(
         AppSnapshot(
@@ -329,6 +339,17 @@ void main() {
       expect(gateway.calls, isEmpty);
       final open = find.text('App-Info öffnen');
       await tester.ensureVisible(open);
+      await tester.drag(find.byType(Scrollable).last, const Offset(0, -1200));
+      await tester.pumpAndSettle();
+      final target = find
+          .ancestor(
+            of: open,
+            matching: find.byWidgetPredicate(
+              (widget) => widget is FilledButton,
+            ),
+          )
+          .first;
+      expect(tester.getBottomRight(target).dy, lessThanOrEqualTo(800 - 48));
       await tester.tap(open);
       await tester.pumpAndSettle();
       expect(gateway.calls.single.$1, 'openSettings');
