@@ -1,7 +1,7 @@
 # Anwenderbericht: OPPO Find X9
 
-Am 31. Oktober 2026 bestätigt Snadretto: „Die Alarmierung funktioniert jetzt
-soweit komplett mit einem simulierten Pikettalarm aus einem Produktiv System.“
+Am 31. Oktober 2026 bestätigt Snadretto sinngemäß, dass die Alarmierung nun
+komplett mit einem simulierten Pikettalarm aus einem Produktivsystem funktioniert.
 Das ist ein extern ausgelöster Testalarm aus dem verwendeten Pikett-System,
 kein ausschließlich lokaler App-Selbsttest.
 
