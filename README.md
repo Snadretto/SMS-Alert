@@ -23,6 +23,7 @@ Anforderungen einschließlich Schweiz nicht gleichwertig umsetzbar; der vorberei
 Flutter-Adapter meldet dies ausdrücklich.
 
 - [Installation, Einrichtung und Bedienung](docs/USER-GUIDE.md)
+- [Veröffentlichung und APK-Download ohne Play Store](docs/PUBLISHING.md)
 - [Build, Signierung und Prüfungen](docs/BUILD.md)
 - [Aktuelle Nachweise und Geräte-Testgrenzen](docs/testing/RINGTONES-0.2.0.md)
 - [Produkt- und Plattformentscheidungen](docs/IMPLEMENTATION-DECISIONS.md)
