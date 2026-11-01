@@ -38,6 +38,13 @@ Grundlage: [Google-Play-Regeln für SMS-Berechtigungen](https://support.google.c
 
 ## Audio und Systemeinstellungen
 
+Abnahmeänderung 01.11.2026: Snadretto akzeptiert die beobachtete Alarmierung bis
+zur Quittierung und verzichtet ausdrücklich auf den separaten physischen
+30-Minuten-Daueralarmtest. Dieses Pflichtkriterium entfällt für die aktuelle
+Abnahme, ohne als bestanden zu gelten. Der Alarmcode bleibt unverändert.
+Bestätigte OPPO-Teilprüfungen und noch offene Nachweise stehen im
+[Anwenderbericht](testing/OPPO-Find-X9-user-2026-10-31.md).
+
 Ton und Vibration laufen im nativen Dienst, bis bewusst quittiert oder pausiert
 wird. Die Oberfläche unterscheidet Aktivierung, technische Einrichtung und
 noch ausstehenden Gerätetest. DND, Rechteentzug, Force-Stop und externe

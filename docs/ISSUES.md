@@ -59,5 +59,15 @@ Basisalarmierung mit einem extern ausgelösten Testalarm aus dem Produktivsystem
 die übrige Gerätematrix bleibt offen.
 
 #9 ist mit dem Anwenderbericht und der ergänzten Anleitung wieder abgeschlossen.
-Die neue Smartphone-Klingeltonauswahl muss auf dem OPPO noch ausprobiert werden;
-die übrigen realen Audio-/OEM-/SIM-Abnahmekriterien in #8/#13 bleiben offen.
+Update 01.11.2026: Snadretto bestätigt auf dem OPPO SMS-Erkennung, getestete
+Regelfilter, SIM2-Auswahl und Zugriff auf Smartphone-Klingeltöne. Zudem sind
+Alarmierung bei Laut/Vibration/Lautlos/DND, Anheben und Absenken der Lautstärke,
+Hintergrund-/Energiesparbetrieb, getrennte Quittierung zweier Alarme und App-Pause
+bestätigt. Details und bewusst nicht abgeleitete Nachweise stehen im
+[Anwenderbericht](testing/OPPO-Find-X9-user-2026-10-31.md).
+
+Der separate physische 30-Minuten-Daueralarmtest entfällt auf ausdrücklichen
+Anwenderwunsch als Abnahmekriterium; er wird nicht als bestanden markiert.
+Die verbleibenden kombinierten Kriterien in #2/#7/#8/#10 sowie Neustart/Update,
+Rechteentzug, Audiozubehör/Telefonat, weitere SMS-Fälle, Backup/Transfer,
+Pixel/Samsung und Pilotabnahme bleiben offen.

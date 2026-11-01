@@ -16,4 +16,4 @@ P14,,,,Force-Stop und passende SMS,,,,,,NOT_RUN,Negativfall keine automatische W
 P15,,,,SMS-/Benachrichtigungsrechte entzogen,,,,,,NOT_RUN,Negativfall
 P16,,,,App pausiert und passende SMS,,,,,,NOT_RUN,Kein Alarm und kein Inhaltsprotokoll
 P17,,,,Pause während aktivem Alarm,,,,,,NOT_RUN,Ton und Vibration müssen enden
-P18,,,,Daueralarm mindestens 30 Minuten,,,,,,NOT_RUN,Kein geplanter Timeout
+P18,,,,Daueralarm mindestens 30 Minuten,,,,,,WAIVED,Entfällt auf Anwenderwunsch vom 01.11.2026; kein bestandener Gerätetest und kein geplanter Timeout

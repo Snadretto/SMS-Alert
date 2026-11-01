@@ -55,11 +55,16 @@ Entfernen genau der ausgewählten Testdatei. Es gibt keinen entsprechenden
 Produktions-Testzugang. Permission-Grants im Alarm-Test sind ausdrücklich
 Test-Setup; die Hilfe selbst erteilt keine. Host-Audio ist deaktiviert: Playerstart
 ist kein physischer Hörbarkeits-/Vibrationsnachweis. Die Klingeltonauswahl auf OPPO/
-ColorOS muss nach dem Update noch praktisch geprüft werden.
+ColorOS war zum damaligen Prüfstand noch offen. Am 01.11.2026 bestätigt der
+Anwender den Zugriff auf die vorhandenen Smartphone-Klingeltöne.
 
 Der [OPPO-Anwenderbericht](OPPO-Find-X9-user-2026-10-31.md) bestätigt separat die
 funktionierende Basisalarmierung mit einem Testalarm aus einem Produktivsystem.
-Er ersetzt keine vollständige DND-/OEM-/SIM-/Dauertestmatrix.
+Er enthält inzwischen auch die am 01.11.2026 bestätigten Geräteprofile,
+Lautstärkerücknahme, Hintergrund-/Energiesparbetrieb, zwei offene Alarme und
+App-Pause. Er ersetzt keine vollständige Geräte-/SIM-/Pilotabnahme. Auf Wunsch
+des Anwenders entfällt der separate physische 30-Minuten-Daueralarmtest als
+Abnahmekriterium; seine Durchführung wird nicht behauptet.
 
 ## Quellen
 

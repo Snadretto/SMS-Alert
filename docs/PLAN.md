@@ -6,6 +6,13 @@
 > und tatsächliche Grenzen stehen in [IMPLEMENTATION-DECISIONS.md](IMPLEMENTATION-DECISIONS.md).
 > Noch offene reale Tests bleiben in den Issues sichtbar.
 
+> Änderung 01.11.2026: Snadretto verzichtet für die aktuelle Abnahme ausdrücklich
+> auf den separaten physischen 30-Minuten-Daueralarmtest. Die beobachtete
+> Alarmierung bis zur Quittierung ist für ihn ausreichend. Dies ändert das
+> Abnahmekriterium, nicht den Alarmcode; ein 30-Minuten-Gerätetest gilt nicht als
+> bestanden. Bestätigte OPPO-Teilprüfungen und verbleibende Nachweise stehen im
+> [Anwenderbericht](testing/OPPO-Find-X9-user-2026-10-31.md).
+
 
 Stand: 29. Oktober 2026. Status: Planung, noch kein technischer Nachweis.
 
@@ -227,7 +234,9 @@ Die konkrete Zuordnung steht im [Issue-Verzeichnis](ISSUES.md).
   Alarmstart innerhalb von 5 Sekunden ab Übergabe der vollständigen SMS durch Android,
   ohne unterdrückte berechtigte Ereignisse im definierten Wiederholungslauf.
   Das ist weder eine SMS-Zustellzeit-Zusage noch ein bereits belegter Messwert.
-- Daueralarm mindestens 30 Minuten als Belastungstest; das ist kein geplanter Timeout.
+- Alarmierung bis zur Quittierung prüfen. Der ursprünglich geforderte separate
+  physische 30-Minuten-Belastungstest entfällt auf Anwenderwunsch vom 01.11.2026;
+  dies führt keinen Timeout ein und ist kein bestandener Langzeitnachweis.
   Dauerbetrieb, Energiebedarf, Aufräumen von Audio/Vibration/Wake-Locks und
   idempotente Quittierung messen. Wiederanlauf darf quittierte Alarme nicht reaktivieren.
 - Offline-Test mit aktivem Mobilfunk/SMS, abgeschalteten Daten und WLAN; zusätzlich
