@@ -13,6 +13,13 @@
 > bestanden. Bestätigte OPPO-Teilprüfungen und verbleibende Nachweise stehen im
 > [Anwenderbericht](testing/OPPO-Find-X9-user-2026-10-31.md).
 
+> Weitere Eingrenzung 01.11.2026: Für die aktuelle Abnahme stehen einfache
+> Textkriterien wie `(TEST)` im Vordergrund. Physische Prüfungen langer/
+> mehrteiliger SMS und besonderer Unicode-/Emoji-Fälle werden auf Anwenderwunsch
+> zurückgestellt. Vorhandene Verarbeitung und automatisierte Tests bleiben
+> erhalten; die unten aufgeführten ursprünglichen Szenarien begründen hierfür
+> keine zusätzliche aktuelle Abnahmehürde.
+
 
 Stand: 29. Oktober 2026. Status: Planung, noch kein technischer Nachweis.
 

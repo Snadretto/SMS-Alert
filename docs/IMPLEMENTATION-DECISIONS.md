@@ -38,6 +38,12 @@ Grundlage: [Google-Play-Regeln für SMS-Berechtigungen](https://support.google.c
 
 ## Audio und Systemeinstellungen
 
+Abnahmeumfang 01.11.2026: Einfache wörtliche SMS-Textkriterien wie `(TEST)`
+sind der aktuelle Schwerpunkt. Lange/mehrteilige SMS und besondere Unicode-/
+Emoji-Fälle werden auf Anwenderwunsch als spätere Erweiterungs-/Abnahmefälle
+zurückgestellt. Die vorhandene Implementierung wird nicht eingeschränkt;
+die physischen Spezialfalltests blockieren die aktuelle Abnahme nicht.
+
 Abnahmeänderung 01.11.2026: Snadretto akzeptiert die beobachtete Alarmierung bis
 zur Quittierung und verzichtet ausdrücklich auf den separaten physischen
 30-Minuten-Daueralarmtest. Dieses Pflichtkriterium entfällt für die aktuelle

@@ -25,7 +25,8 @@ Snadretto bestätigt im anschließenden Gerätetest folgende Ergebnisse auf dem
 bereits genannten OPPO Find X9. Die Angaben sind manuelle Anwenderberichte;
 exakte Android-/ColorOS-/App-Version, Wiederholungszahlen, Laufzeiten, Latenzen
 und vollständige Systemeinstellungen wurden weiterhin nicht mitgeteilt.
-0.2.0 ist die zuletzt bereitgestellte APK, keine ausgelesene Versionsbestätigung.
+Im ergänzenden Bericht nennt der Anwender die Updatefolge 0.1.0 → 0.1.1 → 0.2.0.
+Ein APK-Hash beziehungsweise vollständiger Buildcode wurde nicht ausgelesen.
 
 | Prüfung | Bestätigtes Ergebnis |
 | --- | --- |
@@ -39,6 +40,23 @@ und vollständige Systemeinstellungen wurden weiterhin nicht mitgeteilt.
 | App-Pause | Pausieren funktioniert laut Anwender sauber. |
 | Alarm bis zur Quittierung | Die im bisherigen Gebrauch beobachtete Dauer und Hörbarkeit werden als ausreichend akzeptiert. |
 
+### Weitere bestätigte Ergebnisse vom selben Tag
+
+| Prüfung | Bestätigtes Ergebnis |
+| --- | --- |
+| Offline-Betrieb | Funktioniert laut Anwender im zuvor beschriebenen Test ohne WLAN und mobile Daten bei verfügbarem SMS-Mobilfunk. |
+| Sperrbildschirm und Verlauf | Die beschriebenen Sperrbildschirm-/Datenschutzprüfungen und das Leeren des Verlaufs funktionieren. Ein aktiver Alarm während des Leerens wurde nicht gesondert beschrieben. |
+| Updates der Regeln | In 0.1.0 erstellte, in 0.1.1 und 0.2.0 geänderte Regeln wurden bei den Updates korrekt übernommen. |
+| SMS-Recht entziehen | Die App erkennt den Entzug direkt; SMS lösen dann keine Alarme mehr aus. |
+| SMS-Recht wieder erteilen | Nach erneuter Freigabe funktionieren die Alarme wieder. |
+| Mehrere passende Regeln | Eine SMS, auf die zwei Regeln passen, erzeugt genau ein Alarmereignis. |
+| Identische neue SMS | Zwei separat empfangene identische SMS erzeugen zwei Alarmereignisse. |
+| Einfacher Textfilter | Der Textbestandteil `(TEST)` als Regelkriterium erkennt die entsprechende SMS und alarmiert. |
+| Quittierung auf Sperrbildschirm | Funktioniert. |
+| Pause während Alarm | Funktioniert. |
+| Reaktivierung nach pausiertem Empfang | Während Pause empfangene passende SMS lösen nach Aktivierung keine nachträgliche Benachrichtigung aus. |
+| Neustart | Die App kehrt laut Anwender in den vorherigen Zustand zurück. Eine getrennte Messreihe für alle Zustände/offenen Ereignisse wurde nicht angegeben. |
+
 ### Geänderter Abnahmeumfang
 
 Der Projektverantwortliche verzichtet ausdrücklich auf den separaten physischen
@@ -47,16 +65,24 @@ aktuelle Abnahme. Status: **ENTFALLEN AUF ANWENDERWUNSCH**, nicht bestanden oder
 gemessen. Der Alarmcode und sein Verhalten ohne eingebauten Timeout bleiben
 unverändert. Frühere Emulator-Dauerläufe bleiben historische Nachweise.
 
+Zusätzlich legt Snadretto den Fokus auf einfache Textkriterien wie `(TEST)`.
+Lange beziehungsweise mehrteilige SMS sowie besondere Unicode-/Emoji-Fälle sind
+für die aktuelle Abnahme kein Pflichtanwendungsfall. Sie werden als
+**ZURÜCKGESTELLT AUF ANWENDERWUNSCH** geführt, nicht als physisch getestet.
+Vorhandene Text-/Mehrteilerverarbeitung wird dafür weder entfernt noch geändert;
+ein späterer gezielter Ausbau kann als eigener Featureauftrag erfolgen.
+
 ### Verbleibende Nachweise
 
-Nicht aus diesem Bericht ableitbar sind insbesondere mehrere DND-Profile,
-Lautstärkeänderungen durch den Nutzer während eines Alarms, eine bestimmte
-Kaltprozess-/Doze-/PIN-Sperrkonfiguration, Quittierung über alle Bedienwege,
-SMS-/Pause-Rennen, Wiederaktivierung ohne Nachholen, Pause über Neustart/Update,
-SIM1-/eSIM-/Mehrteiler-/Transportduplikatfälle, Telefonate und Audiozubehör,
-Offline-Betrieb mit abgeschalteten IP-Verbindungen, Rechteentzug, Backup/Transfer
-und gemessene Latenzen. Auch die hervorgehobene Berechtigungshilfe wurde nicht
-ausdrücklich beurteilt. Pixel und Samsung bleiben ungeprüft.
+Nicht gesondert bestätigt sind insbesondere Telefonate, Bluetooth/Kopfhörer,
+Lautstärkeänderungen durch den Nutzer während eines Alarms, Quittierung über die
+Benachrichtigungsaktion, SIM1/eSIM und Entzug der Benachrichtigungsberechtigung.
+Als technische Restnachweise verbleiben Kaltprozess/Doze, SMS-/Pause-Rennen,
+Transportduplikate, detaillierte Wiederanläufe mit offenen/quittierten Ereignissen,
+Klingelton-/Pausenerhalt beim Update, Speicherbegrenzung, Backup/Transfer und
+gemessene Latenzen. Die allgemeine Neustartbestätigung wird hierfür nicht in
+eine vollständige Zustandsmatrix umgedeutet. Die hervorgehobene Berechtigungshilfe
+wurde nicht ausdrücklich beurteilt. Pixel und Samsung bleiben ungeprüft.
 
-Die bestätigten Teilprüfungen werden in #1, #2, #7, #8, #10 und #13 berücksichtigt.
+Die bestätigten Teilprüfungen werden in #1, #2, #7, #8 und #10–#14 berücksichtigt.
 Sie stellen keine vollständige Geräte- oder Pilotabnahme dar.

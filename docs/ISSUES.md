@@ -68,6 +68,16 @@ bestätigt. Details und bewusst nicht abgeleitete Nachweise stehen im
 
 Der separate physische 30-Minuten-Daueralarmtest entfällt auf ausdrücklichen
 Anwenderwunsch als Abnahmekriterium; er wird nicht als bestanden markiert.
-Die verbleibenden kombinierten Kriterien in #2/#7/#8/#10 sowie Neustart/Update,
-Rechteentzug, Audiozubehör/Telefonat, weitere SMS-Fälle, Backup/Transfer,
-Pixel/Samsung und Pilotabnahme bleiben offen.
+Weitere Bestätigung vom selben Tag: Offline-Betrieb, Sperrbildschirm und
+Verlaufleeren, Übernahme der Regeln über 0.1.0 → 0.1.1 → 0.2.0,
+Erkennung von SMS-Rechteentzug und Wiederherstellung nach Freigabe, ein Ereignis
+bei zwei passenden Regeln, zwei Ereignisse bei zwei identischen neuen SMS,
+Textkriterium `(TEST)`, Sperrbildschirm-Quittierung, Pause während Alarm,
+Reaktivierung ohne Nachholen pausierter SMS und Rückkehr in den vorherigen
+Zustand nach Neustart sind bestätigt.
+
+Lange/mehrteilige SMS und besondere Unicode-/Emoji-Fälle werden auf Anwenderwunsch
+für die aktuelle Abnahme zurückgestellt; die vorhandene Verarbeitung bleibt.
+Offen bleiben insbesondere Telefonat/Audiozubehör, manuelle Lautstärkeänderung,
+Benachrichtigungsaktion/-recht, SIM1/eSIM, technische Lifecycle-/Rennen-/Backup-
+und Messnachweise sowie Pixel/Samsung und die abschließende Pilotabnahme.
