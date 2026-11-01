@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">SMS-Alert · Prototyp</string>
+    <string name="prototype_notice">Machbarkeitsprototyp, keine freigegebene Pikett-App. Ein Testalarm beweist weder SMS-Zustellung noch Alarmfähigkeit im Hintergrund.</string>
+    <string name="sender_hint">Exakter SMS-Absender (optional)</string>
+    <string name="text_hint">Textbestandteil (optional, ohne Beachtung der Großschreibung)</string>
+    <string name="rule_help">Mindestens ein Feld ausfüllen. Sind beide gefüllt, müssen beide passen (UND). Im Prototyp keine Nummernnormalisierung.</string>
+    <string name="save">Regel speichern</string>
+    <string name="enable">SMS-Alarm aktivieren</string>
+    <string name="pause">App pausieren und aktuellen Alarm beenden</string>
+    <string name="test_alarm">Lokalen Testalarm starten</string>
+    <string name="acknowledge">Quittieren</string>
+    <string name="grant_permissions">SMS- und Benachrichtigungsrechte</string>
+    <string name="dnd_settings">Nicht-stören-Zugriff einrichten</string>
+    <string name="channel_settings">Alarmkanal und DND-Ausnahme prüfen</string>
+    <string name="fullscreen_settings">Vollbildzugriff prüfen</string>
+    <string name="battery_settings">Akku-Einstellungen ansehen</string>
+    <string name="sound_settings">System-Alarmlautstärke einstellen</string>
+    <string name="alarm_audio_settings">Android 17: Alarm-Audio im Hintergrund erlauben</string>
+    <string name="alarm_audio_help">Android 17 benötigt für Alarm-Audio aus dem Hintergrund zusätzlich die Systemfreigabe „Wecker und Erinnerungen“. Ohne diese Freigabe kann Ton trotz laufendem Alarmdienst blockiert bleiben. Der Prototyp plant keine zeitgesteuerten Alarme.</string>
+    <string name="status_alarm_audio">Alarm-Audio-Zugriff (Android 17+): %1$s</string>
+    <string name="invalid_rule">Mindestens einen Absender oder Textbestandteil eingeben.</string>
+    <string name="saved">Regel gespeichert.</string>
+    <string name="settings_unavailable">Diese Systemeinstellung ist auf diesem Gerät nicht verfügbar.</string>
+    <string name="alarm_title">SMS-Alarm</string>
+    <string name="test_title">TESTALARM · keine SMS</string>
+    <string name="alarm_description">Ton und Vibration laufen bis zur Quittierung, soweit das System sie zulässt.</string>
+    <string name="channel_name">SMS-Daueralarm</string>
+    <string name="channel_description">Aktiver SMS- oder bewusst ausgelöster Testalarm mit Quittieraktion</string>
+    <string name="notification_body">Alarm öffnen oder direkt quittieren.</string>
+    <string name="status_format">App: %1$s\nAndroid: %2$s (API %3$d), Ziel-API %4$d\nSMS-Recht: %5$s\nBenachrichtigungen: %6$s\nDND-Zugriff: %7$s\nKanal-DND-Ausnahme: %8$s\nAktueller DND-Filter: %9$d\nAlarmlautstärke: %10$d/%11$d\nVibrator vorhanden: %12$s\nVollbildzugriff: %13$s\nAkku-Ausnahme: %14$s\nOffener Alarm: %15$s\nLetztes Ergebnis: %16$s\nStartlatenz ab SMS-Übergabe: %17$s\nLetzte Quittierung: %18$s\n\nDiagnosewerte belegen keinen hörbaren Alarm. Vor der ersten Entsperrung und nach Force-Stop ist der Prototyp nicht einsatzbereit.</string>
+    <string name="yes">ja</string>
+    <string name="no">nein</string>
+    <string name="active">aktiviert</string>
+    <string name="paused">pausiert</string>
+</resources>

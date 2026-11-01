@@ -1,0 +1,70 @@
+{
+  "device": "emulator-5556",
+  "timestamp_utc": "2026-10-30T11:24:53.432909+00:00",
+  "apk_sha256": "ee95856465158324f157371863e53b5459ec1076b0629597f5b585e71087a453",
+  "configuration": "exact-alarm access denied (comparison), then granted; full-screen denied; Wi-Fi and mobile data disabled",
+  "platform": "Android 17 / API 37 AOSP emulator",
+  "scope": "synthetic SMS; no physical sound/vibration or cellular delivery proof",
+  "results": [
+    {
+      "case": "fresh_install_paused",
+      "status": "PASS"
+    },
+    {
+      "case": "non_matching_sms_ignored",
+      "status": "PASS"
+    },
+    {
+      "case": "local_test_and_acknowledgement",
+      "status": "PASS",
+      "latency_ms": 49
+    },
+    {
+      "case": "background_audio_without_exact_alarm_access",
+      "status": "OBSERVED",
+      "outcome": "playback_started_not_audibility_verified"
+    },
+    {
+      "case": "cold_process_sms_starts_foreground_alarm",
+      "status": "PASS",
+      "latency_ms": 70,
+      "display": "off before SMS"
+    },
+    {
+      "case": "sms_alarm_acknowledgement_stops_service",
+      "status": "PASS"
+    },
+    {
+      "case": "paused_sms_has_no_alarm_or_diagnostic_write",
+      "status": "PASS"
+    },
+    {
+      "case": "force_stop_is_explicit_negative_case",
+      "status": "PASS"
+    }
+  ],
+  "unit_tests": {
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": [
+      "AndroidGradlePluginVersion",
+      "UnnecessaryRequiredFeature"
+    ]
+  },
+  "build": {
+    "jdk": "17.0.21",
+    "gradle": "9.6.0",
+    "agp": "9.4.0",
+    "compile_sdk": 37,
+    "target_sdk": 37,
+    "min_sdk": 31,
+    "debug_and_unsigned_release": "PASS",
+    "packaged_manifest_check": "PASS"
+  },
+  "release_apk_sha256": "047500d44f882d70030ec416c9d05e0db9a0125338758a127517d730b46b1ccc"
+}

@@ -1,0 +1,19 @@
+case_id,device_model,android_version,target_api,configuration,attempts,latency_ms,audible,vibration,acknowledgement,result,notes
+P01,,,,normaler Klingelmodus,,,,,,NOT_RUN,
+P02,,,,Vibrationsmodus,,,,,,NOT_RUN,
+P03,,,,Lautlosmodus,,,,,,NOT_RUN,
+P04,,,,DND mit erlaubten Alarmen,,,,,,NOT_RUN,
+P05,,,,DND mit blockierten Alarmen,,,,,,NOT_RUN,Negativfall gesondert bewerten
+P06,,,,Alarmlautstärke null,,,,,,NOT_RUN,Negativfall gesondert bewerten
+P07,,,,Kalter Prozess und Display gesperrt,,,,,,NOT_RUN,Kein Force-Stop
+P08,,,,Doze und Energiesparen,,,,,,NOT_RUN,
+P09,,,,Telefonat,,,,,,NOT_RUN,
+P10,,,,Bluetooth verbunden,,,,,,NOT_RUN,Ausgabegerät dokumentieren
+P11,,,,Kopfhörer verbunden,,,,,,NOT_RUN,Ausgabegerät dokumentieren
+P12,,,,Neustart nach erster Entsperrung,,,,,,NOT_RUN,
+P13,,,,Neustart vor erster Entsperrung,,,,,,NOT_RUN,Im Prototyp nicht unterstützt
+P14,,,,Force-Stop und passende SMS,,,,,,NOT_RUN,Negativfall keine automatische Wiederaufnahme behaupten
+P15,,,,SMS-/Benachrichtigungsrechte entzogen,,,,,,NOT_RUN,Negativfall
+P16,,,,App pausiert und passende SMS,,,,,,NOT_RUN,Kein Alarm und kein Inhaltsprotokoll
+P17,,,,Pause während aktivem Alarm,,,,,,NOT_RUN,Ton und Vibration müssen enden
+P18,,,,Daueralarm mindestens 30 Minuten,,,,,,WAIVED,Entfällt auf Anwenderwunsch vom 01.11.2026; kein bestandener Gerätetest und kein geplanter Timeout
