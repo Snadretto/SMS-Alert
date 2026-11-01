@@ -20,6 +20,11 @@
 > erhalten; die unten aufgeführten ursprünglichen Szenarien begründen hierfür
 > keine zusätzliche aktuelle Abnahmehürde.
 
+> Weitere Eingrenzung 01.11.2026: Die manuelle Lautstärkeänderung während eines
+> laufenden Alarms ist keine Pflichtfunktion der aktuellen Abnahme. Der physische
+> Bedienungstest entfällt. Vorhandene Behandlung manueller Änderungen bleibt
+> erhalten; automatische Anhebung/Rücknahme ist durch den Anwender bestätigt.
+
 
 Stand: 29. Oktober 2026. Status: Planung, noch kein technischer Nachweis.
 

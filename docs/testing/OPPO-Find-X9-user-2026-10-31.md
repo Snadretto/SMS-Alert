@@ -56,6 +56,10 @@ Ein APK-Hash beziehungsweise vollständiger Buildcode wurde nicht ausgelesen.
 | Pause während Alarm | Funktioniert. |
 | Reaktivierung nach pausiertem Empfang | Während Pause empfangene passende SMS lösen nach Aktivierung keine nachträgliche Benachrichtigung aus. |
 | Neustart | Die App kehrt laut Anwender in den vorherigen Zustand zurück. Eine getrennte Messreihe für alle Zustände/offenen Ereignisse wurde nicht angegeben. |
+| Updates von Ton und Status | Auch Klingelton und Aktivierungs-/Pausenzustand werden beim Update übernommen. |
+| Quittierung über Benachrichtigung | Funktioniert zusätzlich zu App und Sperrbildschirm. |
+| Benachrichtigungsrecht entziehen | Funktioniert; die App zeigt den fehlenden Zugriff an. |
+| Benachrichtigungsrecht wieder erteilen | Erneute Freigabe funktioniert ebenfalls. |
 
 ### Geänderter Abnahmeumfang
 
@@ -72,14 +76,20 @@ für die aktuelle Abnahme kein Pflichtanwendungsfall. Sie werden als
 Vorhandene Text-/Mehrteilerverarbeitung wird dafür weder entfernt noch geändert;
 ein späterer gezielter Ausbau kann als eigener Featureauftrag erfolgen.
 
+Die manuelle Änderung der Lautstärke während eines laufenden Alarms ist laut
+Snadretto ebenfalls keine Pflichtfunktion der aktuellen Abnahme. Gewünscht ist
+der Ablauf Alarmierung → Quittierung. Der zugehörige physische Bedienungstest
+**ENTFÄLLT AUF ANWENDERWUNSCH**; vorhandener Code zum Respektieren manueller
+Änderungen bleibt erhalten. Die bereits bestätigte automatische Anhebung und
+Rücknahme der Lautstärke bleibt Bestandteil des geprüften Verhaltens.
+
 ### Verbleibende Nachweise
 
-Nicht gesondert bestätigt sind insbesondere Telefonate, Bluetooth/Kopfhörer,
-Lautstärkeänderungen durch den Nutzer während eines Alarms, Quittierung über die
-Benachrichtigungsaktion, SIM1/eSIM und Entzug der Benachrichtigungsberechtigung.
+Nicht gesondert bestätigt sind insbesondere Telefonate, Bluetooth/Kopfhörer
+und SIM1/eSIM.
 Als technische Restnachweise verbleiben Kaltprozess/Doze, SMS-/Pause-Rennen,
 Transportduplikate, detaillierte Wiederanläufe mit offenen/quittierten Ereignissen,
-Klingelton-/Pausenerhalt beim Update, Speicherbegrenzung, Backup/Transfer und
+Speicherbegrenzung, Backup/Transfer und
 gemessene Latenzen. Die allgemeine Neustartbestätigung wird hierfür nicht in
 eine vollständige Zustandsmatrix umgedeutet. Die hervorgehobene Berechtigungshilfe
 wurde nicht ausdrücklich beurteilt. Pixel und Samsung bleiben ungeprüft.

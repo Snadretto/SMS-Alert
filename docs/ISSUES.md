@@ -78,6 +78,12 @@ Zustand nach Neustart sind bestätigt.
 
 Lange/mehrteilige SMS und besondere Unicode-/Emoji-Fälle werden auf Anwenderwunsch
 für die aktuelle Abnahme zurückgestellt; die vorhandene Verarbeitung bleibt.
-Offen bleiben insbesondere Telefonat/Audiozubehör, manuelle Lautstärkeänderung,
-Benachrichtigungsaktion/-recht, SIM1/eSIM, technische Lifecycle-/Rennen-/Backup-
-und Messnachweise sowie Pixel/Samsung und die abschließende Pilotabnahme.
+Zusätzlich bestätigt: Klingelton und Aktivierungs-/Pausenzustand bleiben bei
+Updates erhalten; Quittierung über die Benachrichtigung sowie Entzug mit
+App-Hinweis und erneute Freigabe des Benachrichtigungsrechts funktionieren.
+Die manuelle Lautstärkeänderung während Alarm ist auf Anwenderwunsch keine
+Pflichtfunktion und kein verbleibender Pflicht-Gerätetest; der vorhandene Code bleibt.
+
+Offen bleiben insbesondere Telefonat/Audiozubehör, SIM1/eSIM, technische
+Lifecycle-/Rennen-/Backup- und Messnachweise sowie Pixel/Samsung und die
+abschließende Pilotabnahme.

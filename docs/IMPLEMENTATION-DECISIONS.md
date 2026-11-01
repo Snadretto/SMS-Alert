@@ -61,6 +61,13 @@ nach ausdrücklicher Einstellung in der App. Der vorherige Wert wird nur dann
 zurückgesetzt, wenn der Nutzer ihn zwischenzeitlich nicht verändert hat.
 Android-17-Alarm-Audio-Zugriff wird gesondert erklärt; Vollbild ist optional.
 
+Abnahmeeingrenzung 01.11.2026: Manuelle Lautstärkeänderung während eines Alarms
+ist laut Snadretto keine Pflichtfunktion. Der entsprechende physische Test
+entfällt; Alarmierung und anschließende Quittierung bleiben der vorgesehene
+Ablauf. Die vorhandene Rücknahme berücksichtigt weiterhin Nutzeränderungen.
+Automatische Lautstärkeanhebung und -rücknahme sind bereits durch den Anwender
+bestätigt und werden durch diese Eingrenzung nicht aufgegeben.
+
 Grundlage: [Android 17: Hintergrund-Audio](https://developer.android.com/about/versions/17/changes/bg-audio).
 
 ## Neustart und Direct Boot (#11)
